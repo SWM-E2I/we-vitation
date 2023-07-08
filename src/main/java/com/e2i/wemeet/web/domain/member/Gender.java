@@ -1,7 +1,6 @@
 package com.e2i.wemeet.web.domain.member;
 
-import com.e2i.wemeet.exception.ErrorCode;
-import com.e2i.wemeet.exception.badrequest.InvalidValueException;
+import com.e2i.wemeet.web.exception.badrequest.InvalidGenderException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 
@@ -16,6 +15,6 @@ public enum Gender {
         return Arrays.stream(Gender.values())
             .filter(gender -> gender.name().equals(value.toUpperCase()))
             .findFirst()
-            .orElseThrow(() -> new InvalidValueException(ErrorCode.INVALID_GENDER_VALUE));
+            .orElseThrow(InvalidGenderException::new);
     }
 }
