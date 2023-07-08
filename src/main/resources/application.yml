@@ -29,10 +29,10 @@ spring:
   config:
     activate:
       on-profile: local
-    import: sub/local/application-db.yml
+    import: secure/local/application-db.yml
 ---
 spring:
   config:
     activate:
       on-profile: dev
-    import: sub/dev/application-db.yml
+    import: secure/dev/application-db.yml
