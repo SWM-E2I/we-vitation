@@ -32,6 +32,9 @@ public class Team extends BaseTimeEntity {
     @Column(nullable = false)
     private int memberCount;
 
+    @Column(nullable = false)
+    private String teamCode;
+
     @Column(length = 6, nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
@@ -44,16 +47,16 @@ public class Team extends BaseTimeEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private Member member;
+    private Member teamLeader;
 
     @Builder
     public Team(Long teamId, int memberCount, Gender gender, boolean drinkingOption,
-        String introduction, Member member) {
+        String introduction, Member teamLeader) {
         this.teamId = teamId;
         this.memberCount = memberCount;
         this.gender = gender;
         this.drinkingOption = drinkingOption;
         this.introduction = introduction;
-        this.member = member;
+        this.teamLeader = teamLeader;
     }
 }
