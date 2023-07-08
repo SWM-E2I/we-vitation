@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.form-regist {
+  width: 100%;
+  max-width: 650px;
+  padding: 15px;
+  margin: auto;
+}
+
+.bg-peach {
+  background-color: #FF9CA2;
+  color: #f0f0f0;
+}
