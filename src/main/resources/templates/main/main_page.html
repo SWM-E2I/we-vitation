@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>설문 템플릿</title>
+  <title>메인 화면</title>
 
   <!-- 공통 view port | bootstrap.css -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -25,12 +25,12 @@
   <div class="container">
     <main class="form-regist">
 
-      <div class="text-center" style="padding-top: 5rem; padding-bottom: 1rem;">
+      <div class="text-center" style="padding-top: 9rem; padding-bottom: 1rem;">
         <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">we:meet</h1>
       </div>
 
       <div class="text-center" style="margin-bottom: 2rem;">
-        <img src="/image/icon_sample.png" style="width: fit-content;" alt="ICON">
+        <img src="/image/icon_sample.png" style="width: fit-content;">
       </div>
 
       <div>
@@ -41,23 +41,21 @@
         </p>
       </div>
 
-
-      <div class="col-md-10 container-md" style="padding-top: 8.5rem;">
-        <div style="width: 99%;" class="btn-group">
-          <a th:href="@{/v1/web/phone}" type="button" class="btn bg-peach" style="padding: 0.7rem 0 0.7rem 0">
-            팀원으로 등록하기
-          </a>
-        </div>
-      </div>
-
-      <div class="my-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; We:meet</p>
-      </div>
-
-      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </main>
   </div>
+
+  <div class="col-md-10 main_bottom_button">
+    <a th:href="@{/v1/web/phone}" type="button" class="btn mb-1"
+       style="width: 80vw; background-color: #FF9CA2; color: #f9f3f3; padding: 0.7rem 0 0.7rem 0">팀원으로
+      등록하기</a>
+  </div>
+
+  <div class="col-md-10 main_bottom_button" style="bottom: 2rem;">
+    <p class="mb-1 text-muted text-center text-small"> &copy; We:meet</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>
