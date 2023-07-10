@@ -22,6 +22,9 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+  messages:
+    basename: message.errors
+
   profiles:
     active: local
 ---
