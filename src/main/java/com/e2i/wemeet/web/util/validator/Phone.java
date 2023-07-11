@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = PhoneValidator.class)
 public @interface Phone {
 
-    String message() default "잘못된 휴대폰 번호입니다.";
+    String message() default "{Phone.PhoneRequestDto.phoneNumber}";
 
     Class[] groups() default {};
 
