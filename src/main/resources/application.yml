@@ -25,6 +25,9 @@ spring:
   messages:
     basename: message.errors
 
+  config:
+    import: secure/application-aws.yml, secure/application-enc.yml
+
   profiles:
     active: local
 ---
