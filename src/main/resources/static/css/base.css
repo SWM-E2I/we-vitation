@@ -42,6 +42,12 @@ body {
   padding: 0.7rem 0 0.7rem 0
 }
 
+.yellow_button {
+  width: 100%;
+  background-color: #feb61c;
+  color: #f9f3f3;
+}
+
 .filed-error-text {
   margin-top: 0.7rem;
   color: #dc3545 !important;
