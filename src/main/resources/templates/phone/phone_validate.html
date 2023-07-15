@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 휴대폰 인증</title>
+  <link>
+</head>
+
+<header th:replace="~{layout/common_fragment :: header('번호 인증')}">
+</header>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
+<form th:action="@{/v1/web/phone/cred}" method="post" th:object="${credentialRequest}">
+  <div class="container">
+    <main class="form-regist">
+
+      <div style="padding-top: 1rem; padding-bottom: 1rem;">
+        <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">phone</h1>
+      </div>
+
+      <!-- 테두리 박스 시작 -->
+      <div class="form-floating short_answer" style="margin: 1rem 0 1rem 0;">
+        <input class="form-control" type="tel" id="phone" th:field="*{phone}"
+               required readonly>
+        <label for="phone" class="text-small text-muted">휴대폰 번호</label>
+      </div>
+
+      <div class="form-floating short_answer">
+        <button id="btn-phone-retry" type="button" class="btn yellow_button">재전송</button>
+      </div>
+
+      <div class="form-floating short_answer" style="margin: 1rem 0 1rem 0;">
+        <input th:field="*{credential}" class="form-control" placeholder="Leave a comment here" type="number"
+               id="credential" th:classappend="${bindingResult.getFieldError('credential') != null} ? 'filed-error-box' : ''" required>
+        <label for="credential" class="text-small text-muted">인증 번호</label>
+
+        <div th:if="${bindingResult.getFieldError('credential') != null}">
+          <p th:text="${bindingResult.getFieldError('credential').getDefaultMessage()}"
+             class="filed-error-text text-center text-small text-muted"></p>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <div class="col-md-10 bottom_button">
+    <button type="submit" class="btn long_button">인증 하기</button>
+  </div>
+</form>
+
+<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
+  <script src="/js/phone_retry.js"></script>
+</th:block>
+</body>
+
+</html>

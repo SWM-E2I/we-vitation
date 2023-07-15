@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.config;
+package com.e2i.wemeet.web.config.db;
 
 import java.sql.DatabaseMetaData;
 import javax.sql.DataSource;

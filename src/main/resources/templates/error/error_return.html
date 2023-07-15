@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 안내 페이지</title>
+  <link>
+</head>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
+<div class="container">
+  <main class="form-regist" >
+
+    <div class="text-center" style="padding-top: 14rem; padding-bottom: 1rem;">
+      <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">we:meet</h1>
+    </div>
+
+    <div class="text-center" style="margin-bottom: 2rem;">
+      <img src="/image/warning.png" width="80px" height="80px">
+    </div>
+
+    <div>
+      <p class="my-5 text-muted text-center text-small">
+        유효하지 않은 요청입니다 <br>
+        팀장에게 받은 URL로 다시 절차를 진행해주세요 <br>
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<div class="col-md-10" style="position: absolute; bottom: 2rem; left: 50%; transform: translate(-50%);">
+  <p class="mb-1 text-muted text-center text-small"> &copy; We:meet</p>
+</div>
+</body>
+
+</html>

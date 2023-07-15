@@ -22,17 +22,31 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+  messages:
+    basename: message.errors
+
+  config:
+    import: secure/application-aws.yml, secure/application-enc.yml
+
   profiles:
     active: local
+
+logging:
+  level:
+    org:
+      apache:
+        coyote:
+          http11: debug
+
 ---
 spring:
   config:
     activate:
       on-profile: local
-    import: sub/local/application-db.yml
+    import: secure/local/application-db.yml
 ---
 spring:
   config:
     activate:
       on-profile: dev
-    import: sub/dev/application-db.yml
+    import: secure/dev/application-db.yml

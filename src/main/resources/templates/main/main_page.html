@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet</title>
+  <link>
+</head>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
+  <div class="container">
+    <main class="form-regist">
+
+      <div class="text-center" style="padding-top: 9rem; padding-bottom: 1rem;">
+        <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">we:meet</h1>
+      </div>
+
+      <div class="text-center" style="margin-bottom: 2rem;">
+        <img src="/image/icon_sample.png" style="width: fit-content;">
+      </div>
+
+      <div>
+        <p class="my-5 text-muted text-center text-small">
+          안녕하세요! 대학생 단체 미팅 서비스 위밋입니다. <br>
+          다음 절차를 진행하여 <span th:text="${leaderName}"></span> 님의 <br>
+          팀원이 되어주세요 😀
+        </p>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="col-md-10 main_bottom_button">
+    <a th:href="@{/v1/web/phone}" type="button" class="btn mb-1 long_button">팀원으로
+      등록하기</a>
+  </div>
+
+  <div class="col-md-10 main_bottom_button" style="bottom: 2rem;">
+    <p class="mb-1 text-muted text-center text-small"> &copy; We:meet</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
