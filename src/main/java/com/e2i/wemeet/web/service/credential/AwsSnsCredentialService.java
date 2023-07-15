@@ -50,13 +50,6 @@ public class AwsSnsCredentialService implements SmsCredentialService {
     }
 
     @Override
-    public boolean isExistMember(String phone) {
-
-        memberRepository.findByPhoneNumber()
-        return false;
-    }
-
-    @Override
     public boolean matches(final String target, final String input) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         String origin = operations.get(target);
