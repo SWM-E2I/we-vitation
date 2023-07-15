@@ -4,7 +4,7 @@ import com.e2i.wemeet.web.util.validator.Phone;
 
 public record PhoneRequestDto (
     @Phone
-    String phoneNumber
+    String phone
 
 ) {
 }
