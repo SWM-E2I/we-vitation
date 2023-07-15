@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.controller.main;
 
 import static com.e2i.wemeet.web.controller.CookieEnv.TEAM_CODE;
 

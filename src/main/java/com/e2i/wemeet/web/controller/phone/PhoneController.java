@@ -1,5 +1,6 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.controller.phone;
 
+import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.dto.phone.CredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;

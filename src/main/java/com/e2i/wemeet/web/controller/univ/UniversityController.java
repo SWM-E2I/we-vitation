@@ -1,10 +1,10 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.controller.univ;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/v1/web")
 @Controller
-public class ProfileController {
+public class UniversityController {
 
 }
