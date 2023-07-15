@@ -86,5 +86,9 @@ public class Member extends BaseTimeEntity {
         this.team = team;
         this.role = role;
     }
+
+    public void setTeam(final Team team) {
+        this.team = team;
+    }
 }
 
