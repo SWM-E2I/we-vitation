@@ -17,7 +17,7 @@ class EncryptionHandlerTest {
     @DisplayName("암호화에 성공한다.")
     @ValueSource(strings = {"+821077229911", "+821077229912", "+821077229913", "+821077229914", "+821077229915"})
     @ParameterizedTest
-    void encrypt(String phone) throws Exception {
+    void encrypt(String phone) {
         String encrypted = encryptionHandler.encrypt(phone);
 
         assertThat(encrypted).isNotEqualTo(phone);
@@ -26,7 +26,7 @@ class EncryptionHandlerTest {
     @DisplayName("복호화에 성공한다.")
     @ValueSource(strings = {"+821077229911", "+821077229912", "+821077229913", "+821077229914", "+821077229915"})
     @ParameterizedTest
-    void decrypt(String phone) throws Exception {
+    void decrypt(String phone) {
         //given
         String encrypted = encryptionHandler.encrypt(phone);
 
@@ -34,7 +34,6 @@ class EncryptionHandlerTest {
         String decrypt = encryptionHandler.decrypt(encrypted);
 
         //then
-        assertThat(decrypt).isNotEqualTo(encrypted);
-        assertThat(decrypt).isEqualTo(phone);
+        assertThat(decrypt).isNotEqualTo(encrypted).isEqualTo(phone);
     }
 }
