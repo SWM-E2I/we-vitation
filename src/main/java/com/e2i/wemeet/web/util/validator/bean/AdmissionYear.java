@@ -1,5 +1,6 @@
-package com.e2i.wemeet.web.util.validator;
+package com.e2i.wemeet.web.util.validator.bean;
 
+import com.e2i.wemeet.web.util.validator.module.AdmissionYearValidator;
 import jakarta.validation.Constraint;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,5 +1,6 @@
-package com.e2i.wemeet.web.util.validator;
+package com.e2i.wemeet.web.util.validator.module;
 
+import com.e2i.wemeet.web.util.validator.bean.Phone;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

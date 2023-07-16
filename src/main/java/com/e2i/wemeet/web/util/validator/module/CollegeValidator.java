@@ -1,6 +1,7 @@
-package com.e2i.wemeet.web.util.validator;
+package com.e2i.wemeet.web.util.validator.module;
 
 import com.e2i.wemeet.web.domain.member.Colleges;
+import com.e2i.wemeet.web.util.validator.bean.College;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
