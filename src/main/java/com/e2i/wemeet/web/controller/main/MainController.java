@@ -31,7 +31,7 @@ public class MainController {
     }
 
     private Cookie generateTeamCodeCookie(String code) {
-        Cookie teamCode = new Cookie(TEAM_CODE.getName(), code);
+        Cookie teamCode = new Cookie(TEAM_CODE.getKey(), code);
         teamCode.setHttpOnly(true);
         teamCode.setMaxAge((int) Duration.ofDays(7).getSeconds());
         teamCode.setPath("/");
