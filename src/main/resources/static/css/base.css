@@ -61,3 +61,22 @@ body {
   border-color: #dc3545;
   color: #dc3545;
 }
+
+.form-border {
+  border-color: #ff9fa63f;
+  border-width: 0.13rem;
+}
+
+.mbti-button {
+  width: 3.2rem;
+  height: 2.7rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.mbti-box {
+  width: 23%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 회원 정보 입력</title>
+  <link>
+</head>
+
+<header th:replace="~{layout/common_fragment :: header('2/4')}">
+</header>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fffcfc);">
+
+<div class="container">
+  <main class="form-regist">
+
+    <div style="padding-top: 1rem; padding-bottom: 1rem;">
+      <h5 style="font-family: 'Dosis', sans-serif;">너에 대한 정보를 입력해줘 ☺️</h5>
+    </div>
+
+    <p style="margin-bottom: 0.8rem" class="text-muted text-small">
+      MBTI <strong>*</strong>
+    </p>
+    <div style="display: flex; justify-content: space-between;">
+      <div class="mbti-box">
+        <input type="radio" class="btn-check" name="EI" id="mbti-e" value="MAIL" autocomplete="off" checked>
+        <label class="btn btn-outline-dark mbti-button" style="text-align: center;" for="mbti-e">E</label>
+
+        <input type="radio" class="btn-check" name="EI" id="mbti-i" value="FEMAIL" autocomplete="off">
+        <label class="btn btn-outline-dark mbti-button" for="mbti-i">I</label>
+      </div>
+
+      <div class="mbti-box">
+        <input type="radio" class="btn-check" name="SN" id="mbti-s" value="MAIL" autocomplete="off" checked>
+        <label class="btn btn-outline-dark mbti-button" for="mbti-s">S</label>
+
+        <input type="radio" class="btn-check" name="SN" id="mbti-n" value="FEMAIL" autocomplete="off">
+        <label class="btn btn-outline-dark mbti-button" for="mbti-n">N</label>
+      </div>
+
+      <div class="mbti-box">
+        <input type="radio" class="btn-check" name="FT" id="mbti-f" value="MAIL" autocomplete="off" checked>
+        <label class="btn btn-outline-dark mbti-button" for="mbti-f">F</label>
+
+        <input type="radio" class="btn-check" name="FT" id="mbti-t" value="FEMAIL" autocomplete="off">
+        <label class="btn btn-outline-dark mbti-button" for="mbti-t">T</label>
+      </div>
+
+      <div class="mbti-box">
+        <input type="radio" class="btn-check" name="PJ" id="mbti-p" value="MAIL" autocomplete="off" checked>
+        <label class="btn btn-outline-dark mbti-button" for="mbti-p">P</label>
+
+        <input type="radio" class="btn-check" name="PJ" id="mbti-j" value="FEMAIL" autocomplete="off">
+        <label class="btn btn-outline-dark mbti-button" for="mbti-j">J</label>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+      <input type="checkbox" class="btn-check" id="dont-know">
+      <label style="width: 92%;" class="btn btn-outline-dark" for="dont-know">잘 몰라요</label><br>
+    </div>
+
+    <p style="margin-bottom: 0.4rem" class="text-muted text-small">
+      취미 및 관심사 <strong>*</strong>
+    </p>
+    <div style="margin-bottom: 1.5rem;">
+      <button style="margin-left: 1rem;" type="button" class="btn btn-outline-dark">+ 추가하기</button>
+    </div>
+
+    <p style="margin-bottom: 0.4rem" class="text-muted text-small">
+      자기 소개 <strong>*</strong>
+    </p>
+    <div style="display: flex; justify-content: center;" class="form-floating">
+      <textarea style="height: 27%; width: 98%;" class="form-control" value="" id="floatingTextarea"required></textarea>
+      <label for="floatingTextarea">너를 표현할 수 있는 한마디를 적어줘!</label>
+    </div>
+  </main>
+</div>
+
+<div class="col-md-10 bottom_button">
+  <a th:href="@{/}" type="button" class="btn long_button">다음</a>
+</div>
+
+<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
+  <script src="/js/mbti_button.js"></script>
+</th:block>
+</body>
+
+</html>
