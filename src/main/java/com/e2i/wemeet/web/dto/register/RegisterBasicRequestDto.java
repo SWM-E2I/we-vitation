@@ -1,6 +1,7 @@
 package com.e2i.wemeet.web.dto.register;
 
 import com.e2i.wemeet.web.domain.member.Gender;
+import com.e2i.wemeet.web.util.validator.AdmissionYear;
 import com.e2i.wemeet.web.util.validator.College;
 import com.e2i.wemeet.web.util.validator.CollegeType;
 import org.hibernate.validator.constraints.Length;
@@ -17,7 +18,7 @@ public record RegisterBasicRequestDto (
     @CollegeType
     String collegeType,
 
-    @Length(min = 2, max = 2)
+    @AdmissionYear
     String admissionYear
 ) {
 }
