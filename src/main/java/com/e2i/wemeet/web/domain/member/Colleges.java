@@ -3,7 +3,7 @@ package com.e2i.wemeet.web.domain.member;
 import lombok.Getter;
 
 @Getter
-public enum College {
+public enum Colleges {
     KOREA("고려대학교"),
     YONSEI("연세대학교"),
     SNU("서울대학교"),
@@ -16,7 +16,7 @@ public enum College {
 
     private final String collegeName;
 
-    College(String collegeName) {
+    Colleges(String collegeName) {
         this.collegeName = collegeName;
     }
 }

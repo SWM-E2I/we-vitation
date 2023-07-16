@@ -1,7 +1,5 @@
 package com.e2i.wemeet.web.dto.register;
 
-import com.e2i.wemeet.web.domain.member.College;
-import com.e2i.wemeet.web.domain.member.CollegeType;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Mbti;
 import java.io.Serializable;
@@ -13,8 +11,8 @@ public class MemberRequestDetails implements Serializable {
 
     private String nickname;
     private Gender gender;
-    private College college;
-    private CollegeType collegeType;
+    private String colleges;
+    private String collegeType;
     private String admissionYear;
     private Mbti mbti;
     private String hobby;
@@ -23,7 +21,7 @@ public class MemberRequestDetails implements Serializable {
     public void setBasicInformation(final RegisterBasicRequestDto requestDto) {
         this.nickname = requestDto.nickname();
         this.gender = requestDto.gender();
-        this.college  = requestDto.college();
+        this.colleges = requestDto.college();
         this.collegeType = requestDto.collegeType();
         this.admissionYear = requestDto.admissionYear();
     }
