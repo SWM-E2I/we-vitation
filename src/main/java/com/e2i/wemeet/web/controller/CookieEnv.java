@@ -4,11 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum CookieEnv {
-    TEAM_CODE("teamCode");
+    TEAM_CODE("teamCode"),
+    PHONE_NUMBER("phone")
+    ;
 
-    private final String name;
+    private final String key;
 
-    CookieEnv(String name) {
-        this.name = name;
+    CookieEnv(String key) {
+        this.key = key;
     }
 }
