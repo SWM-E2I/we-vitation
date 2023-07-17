@@ -8,11 +8,9 @@ import com.e2i.wemeet.web.service.credential.SmsCredentialService;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -64,7 +62,7 @@ public class PhoneController {
     }
 
     @ResponseBody
-    @PostMapping("/api/phone")
+    @PostMapping("/phone/reissue")
     public String reissue(@Valid @RequestBody PhoneRequestDto phoneRequestDto) {
         final String phoneNumber = addPrefixOnPhoneNumber(phoneRequestDto.phone());
         smsCredentialService.issue(phoneNumber);
@@ -111,8 +109,7 @@ public class PhoneController {
             return "redirect:/v1/web/fin";
         }
 
-        Cookie phoneCookie = new Cookie(CookieEnv.PHONE_NUMBER.getKey(), cryptography.encrypt(phoneNumber));
-        response.addCookie(phoneCookie);
+        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(phoneNumber), CookieEnv.PHONE_NUMBER));
         return "redirect:/v1/web/register";
     }
 
