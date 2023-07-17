@@ -13,7 +13,7 @@ let phone_retry = {
         if (window.confirm('인증번호를 재전송하시겠습니까?')) {
             $.ajax({
                 type: 'POST',
-                url: '/v1/web/api/phone',
+                url: '/v1/web/phone/reissue',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function () {
