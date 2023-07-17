@@ -1,15 +1,15 @@
-package com.e2i.wemeet.web.controller.univ;
+package com.e2i.wemeet.web.controller.email;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/v1/web/college")
+@RequestMapping("/v1/web/email")
 @Controller
-public class CollegeController {
+public class EmailController {
 
     @GetMapping
-    public String college() {
-        return "college/college_input";
+    public String email() {
+        return "email/email_input";
     }
 }

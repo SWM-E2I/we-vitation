@@ -38,7 +38,7 @@ let register_post = {
       data: JSON.stringify(data)
     }).done(function () {
       alert('회원 정보가 저장되었습니다.');
-      window.location.href = '/v1/web/college';
+      window.location.href = '/v1/web/email';
     }).fail(function () {
       alert('회원 정보 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
     })
