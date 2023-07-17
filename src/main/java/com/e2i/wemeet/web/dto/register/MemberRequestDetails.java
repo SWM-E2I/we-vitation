@@ -8,8 +8,10 @@ import com.e2i.wemeet.web.domain.member.Preference;
 import com.e2i.wemeet.web.domain.member.Role;
 import com.e2i.wemeet.web.util.code.RandomCodeUtils;
 import java.io.Serializable;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public class MemberRequestDetails implements Serializable {
     private static final long serialVersionUID = 77L;

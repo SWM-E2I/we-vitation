@@ -73,7 +73,11 @@ public class RegistrationService {
     }
 
     public Member saveMember(MemberRequestDetails memberRequestDetails) {
-        return memberRepository.save(memberRequestDetails.toEntity());
+        return memberRepository.findByPhoneNumber(memberRequestDetails.getPhoneNumber())
+            .orElseGet(() -> {
+                log.info("SAVE MEMBER :: Details: {}", memberRequestDetails);
+                return memberRepository.save(memberRequestDetails.toEntity());
+            });
     }
 
 }
