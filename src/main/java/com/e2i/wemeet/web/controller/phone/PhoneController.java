@@ -1,15 +1,16 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.controller.phone;
 
+import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.dto.phone.CredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
 import com.e2i.wemeet.web.service.credential.SmsCredentialService;
 import com.e2i.wemeet.web.service.team.TeamService;
+import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,7 @@ public class PhoneController {
     }
 
     @ResponseBody
-    @PostMapping("/api/phone")
+    @PostMapping("/phone/reissue")
     public String reissue(@Valid @RequestBody PhoneRequestDto phoneRequestDto) {
         final String phoneNumber = addPrefixOnPhoneNumber(phoneRequestDto.phone());
         smsCredentialService.issue(phoneNumber);
@@ -80,8 +81,8 @@ public class PhoneController {
 
     @PostMapping("/phone/cred")
     public String verify(@Valid @ModelAttribute CredentialRequestDto credentialRequestDto,
-        BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
-        HttpServletRequest request) {
+        BindingResult bindingResult, Model model,
+        HttpServletRequest request, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("credentialRequest", credentialRequestDto);
             setBindingError(bindingResult, model);
@@ -101,25 +102,15 @@ public class PhoneController {
             return "phone/phone_validate";
         }
 
-        String teamCode = getTeamCode(request);
+        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
 
         // 번호 인증을 받은 사용자가 이미 가입되어있는 회원이라면 마지막 단계로 이동
         if (teamService.setMemberByPhoneNumberIfExist(teamCode, phoneNumber)) {
-            redirectAttributes.addAttribute("code", teamCode);
             return "redirect:/v1/web/fin";
         }
 
-        String encrypted = cryptography.encrypt(phoneNumber);
-        redirectAttributes.addAttribute("phone", encrypted);
+        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(phoneNumber), CookieEnv.PHONE_NUMBER));
         return "redirect:/v1/web/register";
-    }
-
-    private String getTeamCode(HttpServletRequest request) {
-        return Arrays.stream(request.getCookies())
-            .filter(cookie -> cookie.getName().equals(CookieEnv.TEAM_CODE.getName()))
-            .findFirst()
-            .map(Cookie::getValue)
-            .orElseThrow();
     }
 
     private String addPrefixOnPhoneNumber(String phone) {

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 회원 정보 입력</title>
+  <link>
+</head>
+
+<header th:replace="~{layout/common_fragment :: header('2/4')}">
+</header>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fffbfb);">
+
+<div class="container">
+  <main class="form-regist">
+    <form th:action="@{/v1/web/register}" method="POST" th:object="${registerDto}">
+      <div style="padding-top: 1rem; padding-bottom: 1rem;">
+        <h5 style="font-family: 'Dosis', sans-serif;">너에 대한 정보를 입력해줘 ☺️</h5>
+      </div>
+
+      <p style="margin-bottom: 0.3rem" class="text-muted text-small">
+        성별 <strong>*</strong>
+      </p>
+      <div style="margin-bottom: 2rem; display: flex !important; justify-content: center;">
+        <input type="radio" class="btn-check" th:field="${registerDto.gender}" id="man"
+               value="MALE" autocomplete="off" checked>
+        <label style="width: 45%; margin-right: 0.6rem;" class="btn btn-outline-info"
+               for="man">남성</label>
+
+        <input type="radio" class="btn-check" th:field="${registerDto.gender}" id="woman"
+               value="FEMALE" autocomplete="off">
+        <label style="width: 45%; margin-left: 0.6rem;" class="btn btn-outline-danger"
+               for="woman">여성</label>
+      </div>
+
+      <p style="margin-bottom: 0.3rem" class="text-muted text-small">
+        닉네임 <strong>*</strong>
+      </p>
+      <div style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 2rem;"
+           class="form-floating">
+        <input th:field="${registerDto.nickname}" class="form-control form-border" value=""
+               type="text" id="nickname"
+               required/>
+        <label for="nickname" class="text-small text-muted">2자 이상 20자 미만으로 적어줘!</label>
+
+        <div th:if="${bindingResult.getFieldError('nickname') != null}">
+          <p th:text="${bindingResult.getFieldError('nickname').getDefaultMessage()}"
+             class="filed-error-text text-center text-small text-muted"></p>
+        </div>
+      </div>
+
+      <p style="margin-bottom: 0.3rem" class="text-muted text-small">
+        학교 및 학과 <strong>*</strong>
+      </p>
+      <div style="margin: 0 0 1rem 0; display: flex !important; justify-content: space-between;">
+        <div class="form-floating short_answer"
+             style="margin-bottom: 1rem; width: 47%; margin-right: 0.6rem;">
+          <input th:field="${registerDto.college}" class="form-control form-border" name="college"
+                 list="colleges" id="college">
+          <label for="college" class="text-small text-muted">학교</label>
+          <datalist id="colleges">
+            <option th:each="college : ${colleges}"
+                    th:value="${college}"
+                    th:text="${college}"/>
+          </datalist>
+
+          <div th:if="${bindingResult.getFieldError('college') != null}">
+            <p th:text="${bindingResult.getFieldError('college').getDefaultMessage()}"
+               class="filed-error-text text-center text-small text-muted"></p>
+          </div>
+        </div>
+
+        <div class="form-floating short_answer"
+             style="margin-bottom: 1rem; width: 47%; margin-left: 0.6rem;">
+          <input th:field="${registerDto.collegeType}" class="form-control form-border"
+                 list="majors" id="major">
+          <label for="major" class="text-small text-muted">학과</label>
+          <datalist id="majors">
+            <option th:each="collegeType : ${collegeTypes}"
+                    th:value="${collegeType}"
+                    th:text="${collegeType}"/>
+          </datalist>
+
+          <div th:if="${bindingResult.getFieldError('collegeType') != null}">
+            <p th:text="${bindingResult.getFieldError('collegeType').getDefaultMessage()}"
+               class="filed-error-text text-center text-small text-muted"></p>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-bottom: 0.3rem" class="text-muted text-small">
+        학번 <strong>*</strong>
+      </p>
+      <div style="margin-bottom: 1rem;">
+        <select th:field="${registerDto.admissionYear}" name="admissionYear"
+                class="form-select form-border">
+          <option value="NONE" selected>너의 학번을 선택해줘</option>
+          <option th:each="year: ${admissionYears}"
+                  th:value="${year}"
+                  th:text="${year + ' 학번'}"> 23 학번
+          </option>
+        </select>
+
+        <div th:if="${bindingResult.getFieldError('admissionYear') != null}">
+          <p th:text="${bindingResult.getFieldError('admissionYear').getDefaultMessage()}"
+             class="filed-error-text text-center text-small text-muted"></p>
+        </div>
+      </div>
+
+      <div class="col-md-10 bottom_button">
+        <button type="submit" class="btn long_button">다음</button>
+      </div>
+
+    </form>
+
+  </main>
+</div>
+
+<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
+  <script></script>
+</th:block>
+</body>
+
+</html>

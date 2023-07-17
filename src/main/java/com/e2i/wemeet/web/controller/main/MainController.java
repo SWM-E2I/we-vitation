@@ -1,11 +1,9 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.controller.main;
 
-import static com.e2i.wemeet.web.controller.CookieEnv.TEAM_CODE;
-
+import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.service.team.TeamService;
-import jakarta.servlet.http.Cookie;
+import com.e2i.wemeet.web.util.request.CookieUtils;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,21 +20,11 @@ public class MainController {
 
     @GetMapping("/main")
     public String mainPage(@RequestParam String code, HttpServletResponse response, Model model) {
-        response.addCookie(generateTeamCodeCookie(code));
+        response.addCookie(CookieUtils.createCookie(code, CookieEnv.TEAM_CODE));
 
         // String leaderName = teamService.getTeamLeaderName(code);
         model.addAttribute("leaderName", "leaderName");
 
         return "/main/main_page";
-    }
-
-    private Cookie generateTeamCodeCookie(String code) {
-        Cookie teamCode = new Cookie(TEAM_CODE.getName(), code);
-        teamCode.setHttpOnly(true);
-        teamCode.setMaxAge((int) Duration.ofDays(7).getSeconds());
-        teamCode.setPath("/");
-        teamCode.setSecure(true);
-
-        return teamCode;
     }
 }

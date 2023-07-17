@@ -1,5 +1,6 @@
 package com.e2i.wemeet.web.config;
 
+import com.e2i.wemeet.web.global.interceptor.IdentifierCheckInterceptor;
 import com.e2i.wemeet.web.global.interceptor.TeamCheckInterceptor;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,10 @@ public class GlobalConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TeamCheckInterceptor())
             .order(1)
-            .addPathPatterns("/v1/web/**")
-            .excludePathPatterns("/v1/web/main", "/v1/web/error");
+            .addPathPatterns("/v1/web/phone/**", "/v1/web/register/**");
+
+        registry.addInterceptor(new IdentifierCheckInterceptor())
+            .order(2)
+            .addPathPatterns("/v1/web/college/**", "/v1/web/profile/**");
     }
 }
