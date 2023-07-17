@@ -9,8 +9,13 @@ public abstract class RandomCodeUtils {
     private RandomCodeUtils() {
     }
 
-    public static String crateCredential() {
+    public static String createCredential() {
         int code = random.nextInt(900_000) + 100_000;
+        return String.valueOf(code);
+    }
+
+    public static String createIntegerCode4() {
+        int code = random.nextInt(9000) + 1000;
         return String.valueOf(code);
     }
 }
