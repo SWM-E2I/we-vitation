@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 public record CredentialRequestDto(
     @Phone
     String phone,
-    @Length(min = 6, max = 6)
+    @Length(min = 6, max = 6, message = "{Length.CredentialRequestDto.credential}")
     String credential
 ) {
 }
