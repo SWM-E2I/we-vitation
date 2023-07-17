@@ -11,7 +11,7 @@ public abstract class CookieUtils {
     private CookieUtils() {
     }
 
-    public static String getCookieValue(Cookie[] cookies, CookieEnv cookieEnv) throws CookieNotFoundException {
+    public static String getCookieValue(final Cookie[] cookies, final CookieEnv cookieEnv) throws CookieNotFoundException {
         return Arrays.stream(cookies)
             .filter(cookie -> cookie.getName().equals(cookieEnv.getKey()))
             .findFirst()
@@ -20,5 +20,24 @@ public abstract class CookieUtils {
                 log.info("{} : Not Found In Cookie", cookieEnv.name());
                 return new CookieNotFoundException();
             });
+    }
+
+    public static Cookie getCookie(final Cookie[] cookies, final CookieEnv cookieEnv) throws CookieNotFoundException {
+        return Arrays.stream(cookies)
+            .filter(cookie -> cookie.getName().equals(cookieEnv.getKey()))
+            .findFirst()
+            .orElseThrow(() -> {
+                log.info("{} : Not Found In Cookie", cookieEnv.name());
+                return new CookieNotFoundException();
+            });
+    }
+
+    public static Cookie createCookie(final String value, final CookieEnv cookieEnv) {
+        Cookie cookie = new Cookie(cookieEnv.getKey(), value);
+        cookie.setMaxAge(cookieEnv.getExpireSeconds());
+        cookie.setPath("/");
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        return cookie;
     }
 }
