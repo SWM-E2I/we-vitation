@@ -7,9 +7,7 @@ import org.hibernate.validator.constraints.Length;
 public record RegisterAdditionalRequestDto (
     @NotNull
     Mbti mbti,
-
     String hobby,
-
     @Length(max = 100)
     String introduction
 ) {

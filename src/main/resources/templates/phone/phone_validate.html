@@ -18,8 +18,17 @@
         <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">phone</h1>
       </div>
 
-      <!-- 테두리 박스 시작 -->
-      <div class="form-floating short_answer" style="margin: 1rem 0 1rem 0;">
+      <div>
+        <p class="text-muted text-small">
+          📱 저기.. 휴대폰 번호가 뭐야..?
+        </p>
+      </div>
+
+      <div class="form-floating short_answer position-relative" style="margin: 1rem 0 1rem 0;">
+        <span class="position-absolute top-0 translate-middle badge rounded-pill bg-dark" style="left: 84% !important;">
+            - 를 빼고 입력해줘!
+          <span class="visually-hidden">unread messages</span>
+        </span>
         <input class="form-control" type="tel" id="phone" th:field="*{phone}"
                required readonly>
         <label for="phone" class="text-small text-muted">휴대폰 번호</label>

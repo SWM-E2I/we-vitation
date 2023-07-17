@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -30,16 +31,18 @@ public class AwsSnsCredentialService implements SmsCredentialService {
     private final RedisTemplate<String, String> redisTemplate;
     private final MemberRepository memberRepository;
 
+    @Transactional
     @Override
     public void issue(final String phone) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
-        String credential = RandomCodeUtils.crateCredential();
+        String credential = RandomCodeUtils.createCredential();
         sendSms(phone, credential);
 
         operations.set(phone, credential, Duration.ofMinutes(3));
     }
 
+    @Transactional
     @Override
     public void verify(final String target, final String credential) {
         if (!matches(target, credential)) {
