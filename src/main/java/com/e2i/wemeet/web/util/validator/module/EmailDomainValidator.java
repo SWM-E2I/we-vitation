@@ -8,6 +8,6 @@ public class EmailDomainValidator implements ConstraintValidator<EmailDomain, St
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value.matches("^[^.]+\\.[^.]+\\.[^.]+$");
+        return value.matches("^[^.]+\\.[^.]+$");
     }
 }
