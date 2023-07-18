@@ -1,5 +1,7 @@
 package com.e2i.wemeet.web.domain.member;
 
+import com.e2i.wemeet.web.exception.notfound.CollegeNotFoundException;
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -20,5 +22,12 @@ public enum Colleges {
     Colleges(String collegeName, String emailDomain) {
         this.collegeName = collegeName;
         this.emailDomain = emailDomain;
+    }
+
+    public static Colleges findByCollegeName(String collegeName) {
+        return Arrays.stream(Colleges.values())
+            .filter(college -> college.collegeName.equals(collegeName))
+            .findFirst()
+            .orElseThrow(CollegeNotFoundException::new);
     }
 }

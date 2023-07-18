@@ -32,8 +32,6 @@ public class AwsSesService implements EmailCredentialService {
 
     private final SesClient sesClient;
     private final RedisTemplate<String, String> redisTemplate;
-    private final MemberRepository memberRepository;
-
 
     @Transactional
     @Override
@@ -52,12 +50,6 @@ public class AwsSesService implements EmailCredentialService {
         if (!matches(target, credential)) {
             throw new CredentialNotMatchException();
         }
-        saveEmail(target, memberId);
-    }
-
-    private void saveEmail(String target, Long memberId) {
-        memberRepository.findById(memberId).ifPresent(member ->
-            member.getCollegeInfo().saveMail(target));
     }
 
     @Override
