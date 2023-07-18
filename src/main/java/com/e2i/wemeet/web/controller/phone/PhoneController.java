@@ -1,7 +1,7 @@
 package com.e2i.wemeet.web.controller.phone;
 
 import com.e2i.wemeet.web.controller.CookieEnv;
-import com.e2i.wemeet.web.dto.phone.CredentialRequestDto;
+import com.e2i.wemeet.web.dto.phone.PhoneCredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
 import com.e2i.wemeet.web.service.credential.sms.SmsCredentialService;
@@ -72,30 +72,30 @@ public class PhoneController {
 
     @GetMapping("/phone/cred")
     public String credential(@RequestParam String phone, Model model) {
-        CredentialRequestDto credentialRequestDto = new CredentialRequestDto(phone, null);
-        model.addAttribute("credentialRequest", credentialRequestDto);
-        model.addAttribute("bindingResult", new BeanPropertyBindingResult(credentialRequestDto, "phoneRequest"));
+        PhoneCredentialRequestDto phoneCredentialRequestDto = new PhoneCredentialRequestDto(phone, null);
+        model.addAttribute("credentialRequest", phoneCredentialRequestDto);
+        model.addAttribute("bindingResult", new BeanPropertyBindingResult(phoneCredentialRequestDto, "phoneRequest"));
 
         return "phone/phone_validate";
     }
 
     @PostMapping("/phone/cred")
-    public String verify(@Valid @ModelAttribute CredentialRequestDto credentialRequestDto,
+    public String verify(@Valid @ModelAttribute PhoneCredentialRequestDto phoneCredentialRequestDto,
         BindingResult bindingResult, Model model,
         HttpServletRequest request, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("credentialRequest", credentialRequestDto);
+            model.addAttribute("credentialRequest", phoneCredentialRequestDto);
             setBindingError(bindingResult, model);
 
             return "phone/phone_validate";
         }
 
-        final String phoneNumber = addPrefixOnPhoneNumber(credentialRequestDto.phone());
+        final String phoneNumber = addPrefixOnPhoneNumber(phoneCredentialRequestDto.phone());
 
         try {
-            smsCredentialService.verify(phoneNumber, credentialRequestDto.credential());
+            smsCredentialService.verify(phoneNumber, phoneCredentialRequestDto.credential());
         } catch (CustomException e) {
-            model.addAttribute("credentialRequest", credentialRequestDto);
+            model.addAttribute("credentialRequest", phoneCredentialRequestDto);
             bindingResult.addError(new FieldError("credential", "credential", e.getMessage()));
             setBindingError(bindingResult, model);
 
