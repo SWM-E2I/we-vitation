@@ -4,7 +4,7 @@ import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.dto.phone.CredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
-import com.e2i.wemeet.web.service.credential.SmsCredentialService;
+import com.e2i.wemeet.web.service.credential.sms.SmsCredentialService;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
