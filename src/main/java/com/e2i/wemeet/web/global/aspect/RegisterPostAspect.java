@@ -38,16 +38,16 @@ public class RegisterPostAspect {
 
     private void handleCookies(HttpServletRequest request, HttpServletResponse response, Long memberId) {
         Cookie teamCodeCookie = CookieUtils.getCookie(request.getCookies(), CookieEnv.TEAM_CODE);
-        Cookie phoneCookie = CookieUtils.getCookie(request.getCookies(), CookieEnv.PHONE_NUMBER);
+        Cookie phoneCookie = new Cookie(CookieEnv.PHONE_NUMBER.getKey(), null);
         phoneCookie.setMaxAge(0);
-        teamCodeCookie.setMaxAge(0);
+        phoneCookie.setValue(null);
+        phoneCookie.setPath("/");
 
         String teamCode = teamCodeCookie.getValue();
         String identifier = cryptography.encrypt(teamCode + "-" + memberId);
         Cookie identifierCookie = CookieUtils.createCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
 
         response.addCookie(phoneCookie);
-        response.addCookie(teamCodeCookie);
         response.addCookie(identifierCookie);
 
         log.info("Identifier Cookie added: team {} / memberId {}", teamCode, memberId);

@@ -18,9 +18,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "MEMBER")
@@ -87,8 +89,16 @@ public class Member extends BaseTimeEntity {
         this.role = role;
     }
 
+    public void initTeamFromTeamLeader(final Team team) {
+        setTeam(team);
+        team.setTeamInformation(this);
+    }
+
     public void setTeam(final Team team) {
         this.team = team;
+        if (!team.getMembers().contains(this)) {
+            team.getMembers().add(this);
+        }
     }
 }
 

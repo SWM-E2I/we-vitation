@@ -1,7 +1,5 @@
-package com.e2i.wemeet.web.service.credential;
+package com.e2i.wemeet.web.service.credential.sms;
 
-import com.e2i.wemeet.web.config.aws.AwsSnsConfig;
-import com.e2i.wemeet.web.domain.member.MemberRepository;
 import com.e2i.wemeet.web.exception.badrequest.CredentialNotMatchException;
 import com.e2i.wemeet.web.exception.internal.AwsSnsTransferException;
 import com.e2i.wemeet.web.exception.notfound.SmsCredentialNotFoundException;
@@ -14,9 +12,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
 import software.amazon.awssdk.services.sns.model.PublishResponse;
@@ -27,9 +22,8 @@ import software.amazon.awssdk.services.sns.model.SnsException;
 @Service
 public class AwsSnsCredentialService implements SmsCredentialService {
 
-    private final AwsSnsConfig awsSnsConfig;
+    private final SnsClient snsClient;
     private final RedisTemplate<String, String> redisTemplate;
-    private final MemberRepository memberRepository;
 
     @Transactional
     @Override
@@ -65,7 +59,6 @@ public class AwsSnsCredentialService implements SmsCredentialService {
     }
 
     private void sendSms(final String phoneNumber, final String message) {
-        SnsClient snsClient = getSnsClient();
         try {
             PublishRequest request = PublishRequest.builder()
                 .message(message)
@@ -79,21 +72,5 @@ public class AwsSnsCredentialService implements SmsCredentialService {
             log.info(e.getMessage());
             throw new AwsSnsTransferException();
         }
-    }
-
-    private SnsClient getSnsClient() {
-        return SnsClient.builder()
-            .credentialsProvider(
-                getAwsCredentials(
-                    awsSnsConfig.getAccessKey(),
-                    awsSnsConfig.getSecretKey())
-            ).region(Region.of(awsSnsConfig.getRegion()))
-            .build();
-    }
-
-    private AwsCredentialsProvider getAwsCredentials(final String accessKeyId, final String secretAccessKey) {
-        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKeyId,
-            secretAccessKey);
-        return () -> awsBasicCredentials;
     }
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 이메일 인증</title>
+  <link>
+</head>
+
+<header th:replace="~{layout/common_fragment :: header('3/4')}">
+</header>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
+<form th:action="@{/v1/web/email}" method="post" th:object="${emailDto}">
+  <div class="container">
+    <main class="form-regist">
+
+      <div style="padding-top: 1rem; padding-bottom: 1rem;">
+        <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">Email</h1>
+      </div>
+
+      <div>
+        <p class="text-muted text-small">
+          💌 너의 학교 이메일을 입력해줘!
+        </p>
+      </div>
+
+      <div class="form-floating short_answer position-relative"
+           style="margin: 1rem 0 1rem 0; display: flex;">
+          <span class="position-absolute top-0 translate-middle badge rounded-pill bg-dark"
+                style="left: 90% !important;">
+            거의 다 왔어!
+          </span>
+
+        <input th:field="*{emailName}" style="width: 46%;" class="form-control" type="text" value="" id="emailName" required>
+        <label for="emailName" class="text-small text-muted">이메일</label>
+
+        <span style="width: 1.5rem; padding: 0; justify-content: center;"
+              class="input-group-text">@</span>
+
+        <input th:field="*{emailDomain}" style="width: 46%;" class="form-control" name="emailDomain" list="emailDomain" required/>
+        <datalist id="emailDomain">
+          <option th:each="domain : ${domains}"
+                  th:value="${domain}"
+                  th:text="${domain}">
+        </datalist>
+      </div>
+
+      <div th:if="${bindingResult.getFieldError('emailName') != null}">
+        <p th:text="${bindingResult.getFieldError('emailName').getDefaultMessage()}"
+           class="filed-error-text text-center text-small text-muted"></p>
+      </div>
+
+      <div th:if="${bindingResult.getFieldError('emailDomain') != null}">
+        <p th:text="${bindingResult.getFieldError('emailDomain').getDefaultMessage()}"
+           class="filed-error-text text-center text-small text-muted"></p>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="col-md-10 bottom_button">
+    <button type="submit" class="btn long_button">인증 번호 발송</button>
+  </div>
+
+</form>
+
+<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
+  <script></script>
+</th:block>
+</body>
+
+</html>

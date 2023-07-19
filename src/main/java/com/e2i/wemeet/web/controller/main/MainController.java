@@ -1,6 +1,8 @@
 package com.e2i.wemeet.web.controller.main;
 
 import com.e2i.wemeet.web.controller.CookieEnv;
+import com.e2i.wemeet.web.global.resolver.Invitation;
+import com.e2i.wemeet.web.global.resolver.InvitationInfo;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,9 +24,17 @@ public class MainController {
     public String mainPage(@RequestParam String code, HttpServletResponse response, Model model) {
         response.addCookie(CookieUtils.createCookie(code, CookieEnv.TEAM_CODE));
 
-        // String leaderName = teamService.getTeamLeaderName(code);
-        model.addAttribute("leaderName", "leaderName");
+        String leaderName = teamService.getTeamLeaderName(code);
+        model.addAttribute("leaderName", leaderName);
 
-        return "/main/main_page";
+        return "main/main_page";
+    }
+
+    @GetMapping("/finish")
+    public String finishPage(@Invitation InvitationInfo invitationInfo, Model model) {
+        String leaderName = teamService.getTeamLeaderName(invitationInfo.teamCode());
+        model.addAttribute("leaderName", leaderName);
+
+        return "finish/finish";
     }
 }
