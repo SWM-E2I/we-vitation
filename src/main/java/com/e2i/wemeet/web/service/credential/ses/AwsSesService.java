@@ -46,7 +46,7 @@ public class AwsSesService implements EmailCredentialService {
 
     @Transactional
     @Override
-    public void verify(final String target, final String credential, final Long memberId) {
+    public void verify(final String target, final String credential) {
         if (!matches(target, credential)) {
             throw new CredentialNotMatchException();
         }
