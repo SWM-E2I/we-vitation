@@ -45,6 +45,11 @@
         </datalist>
       </div>
 
+      <div th:if="${bindingResult.getFieldError('emailName') != null}">
+        <p th:text="${bindingResult.getFieldError('emailName').getDefaultMessage()}"
+           class="filed-error-text text-center text-small text-muted"></p>
+      </div>
+
       <div th:if="${bindingResult.getFieldError('emailDomain') != null}">
         <p th:text="${bindingResult.getFieldError('emailDomain').getDefaultMessage()}"
            class="filed-error-text text-center text-small text-muted"></p>
