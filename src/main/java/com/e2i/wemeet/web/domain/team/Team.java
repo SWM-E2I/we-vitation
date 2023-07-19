@@ -1,6 +1,6 @@
 package com.e2i.wemeet.web.domain.team;
 
-import com.e2i.wemeet.web.domain.BaseTimeEntity;
+import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.util.code.RandomCodeUtils;
@@ -54,7 +54,7 @@ public class Team extends BaseTimeEntity {
     private Member teamLeader;
 
     @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
+    private final List<Member> members = new ArrayList<>();
 
     @Builder
     public Team(int memberCount, boolean drinkingOption, String introduction) {

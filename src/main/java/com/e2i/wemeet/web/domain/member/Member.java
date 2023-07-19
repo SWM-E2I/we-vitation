@@ -1,6 +1,6 @@
 package com.e2i.wemeet.web.domain.member;
 
-import com.e2i.wemeet.web.domain.BaseTimeEntity;
+import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.base.CryptoConverter;
 import com.e2i.wemeet.web.domain.team.Team;
 import jakarta.persistence.Column;
