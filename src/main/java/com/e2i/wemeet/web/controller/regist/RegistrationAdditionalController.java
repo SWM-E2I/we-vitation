@@ -6,6 +6,8 @@ import com.e2i.wemeet.web.service.registration.RegistrationService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +31,13 @@ public class RegistrationAdditionalController {
 
     @ResponseBody
     @PostMapping("/additional")
-    public Long register(@RequestBody RegisterAdditionalRequestDto requestDto, HttpServletRequest request) {
+    public Long register(@RequestBody RegisterAdditionalRequestDto requestDto, HttpServletRequest request, HttpServletResponse response)
+        throws IOException {
         String memberDetailKey = getMemberDetailKey(request);
-        return registrationService.saveRegistration(requestDto, memberDetailKey);
+        Long memberId = registrationService.saveRegistration(requestDto, memberDetailKey);
+
+        if (memberId == null) response.sendRedirect("/v1/web/register/basic");
+        return memberId;
     }
 
     private String getMemberDetailKey(HttpServletRequest request) {

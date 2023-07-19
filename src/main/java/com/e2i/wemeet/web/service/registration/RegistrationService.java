@@ -8,12 +8,14 @@ import com.e2i.wemeet.web.dto.register.RegisterBasicRequestDto;
 import com.e2i.wemeet.web.exception.internal.InternalServerException;
 import com.e2i.wemeet.web.util.serialize.SerializeUtils;
 import java.io.IOException;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Transactional
@@ -34,6 +36,10 @@ public class RegistrationService {
 
     public Long saveRegistration(final RegisterAdditionalRequestDto requestDto, final String key) {
         MemberRequestDetails memberRequestDetails = findMemberDetail(key);
+        if (memberRequestDetails == null) {
+            return null;
+        }
+
         memberRequestDetails.setAdditionalInformation(requestDto);
 
         log.info("RegistrationService additional save ::  memberRequestDetails: {}", memberRequestDetails);
@@ -45,6 +51,10 @@ public class RegistrationService {
     private MemberRequestDetails findMemberDetail(final String key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         String serializedMember = operations.get(key);
+
+        if (!StringUtils.hasText(serializedMember)) {
+            return null;
+        }
 
         try {
             return SerializeUtils.deserialize(serializedMember, MemberRequestDetails.class);
@@ -62,7 +72,7 @@ public class RegistrationService {
 
         try {
             String serializedMember = SerializeUtils.serialize(memberRequestDetails);
-            operations.set(key, serializedMember);
+            operations.set(key, serializedMember, Duration.ofDays(3));
         } catch (IOException ioException) {
             log.info("SerializeUtils.serialize() - Exception: {}", ioException.getMessage());
             throw new InternalServerException("직렬화에 실패했습니다.");
