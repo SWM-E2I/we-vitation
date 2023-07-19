@@ -1,10 +1,14 @@
 package com.e2i.wemeet.web.service.email;
 
+import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.MemberRepository;
 import com.e2i.wemeet.web.exception.badrequest.EmailDomainNotMatchException;
+import com.e2i.wemeet.web.exception.notfound.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CollegeEmailServiceImpl implements CollegeEmailService {
@@ -21,7 +25,10 @@ public class CollegeEmailServiceImpl implements CollegeEmailService {
 
     @Override
     public void saveEmail(final String email, final Long memberId) {
-        memberRepository.findById(memberId).ifPresent(member ->
-            member.getCollegeInfo().saveMail(email));
+        log.info("Save email: {} / memberId: {}", email, memberId);
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(MemberNotFoundException::new);
+
+        member.getCollegeInfo().saveMail(email);
     }
 }
