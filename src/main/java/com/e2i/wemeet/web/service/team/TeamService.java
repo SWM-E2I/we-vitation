@@ -5,6 +5,7 @@ import com.e2i.wemeet.web.domain.member.MemberRepository;
 import com.e2i.wemeet.web.domain.team.Team;
 import com.e2i.wemeet.web.domain.team.TeamRepository;
 import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
+import com.e2i.wemeet.web.exception.notfound.MemberNotFoundException;
 import com.e2i.wemeet.web.exception.notfound.TeamCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,15 @@ public class TeamService {
         verifyTeamMemberCount(team);
         member.setTeam(team);
         return true;
+    }
+
+    public void registerTeam(final Long memberId, final String teamCode) {
+        Team team = teamRepository.findByTeamCode(teamCode)
+            .orElseThrow(TeamCodeNotFoundException::new);
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(MemberNotFoundException::new);
+
+        member.setTeam(team);
     }
 
     private void verifyTeamMemberCount(Team team) {
