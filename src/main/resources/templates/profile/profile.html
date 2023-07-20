@@ -12,44 +12,57 @@
 <body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
 <div class="container" style="height: 90%">
   <main class="form-regist" style="height: 100% !important;">
-
-    <div class="position-relative" style="margin-top: 1rem; padding-bottom: 1rem; padding-right: 2rem; display: inline-block;">
-          <span class="position-absolute top-0 translate-middle badge rounded-pill bg-dark" style="left: 100% !important;">
+    <form th:action="@{/v1/web/profile}" method="post" enctype="multipart/form-data"
+          style="height: 100%">
+      <div class="position-relative"
+           style="margin-top: 1rem; padding-bottom: 1rem; padding-right: 2rem; display: inline-block;">
+          <span class="position-absolute top-0 translate-middle badge rounded-pill bg-dark"
+                style="left: 100% !important;">
             마지막 단계!
             <span class="visually-hidden">unread messages</span>
           </span>
-      <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">
-        Picture
-      </h1>
-    </div>
-
-    <div>
-      <p class="text-muted text-small">
-        🌟 너의 인생샷을 올려봐!
-      </p>
-    </div>
-    <div>
-      <p class="text-muted text-small" style="color: #2d2e78 !important;">
-        이 사진은 너를 대표하는 사진이 될거야!
-      </p>
-    </div>
-
-    <div style="display: flex; justify-content: center; align-items: center; height: 60%;">
-      <div class="text-center" style="display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; border-width: 0.3rem; border-style: dashed; width: 15rem; height: 15rem;">
-        <img src="/image/galary__bold.png" style="text-align: center; width: fit-content;">
+        <h1 id="logo_icon" style="font-family: 'Dosis', sans-serif;">
+          Picture
+        </h1>
       </div>
-    </div>
 
+      <div>
+        <p class="text-muted text-small">
+          🌟 너의 인생샷을 올려봐!
+        </p>
+      </div>
+      <div>
+        <p class="text-muted text-small" style="color: #2d2e78 !important;">
+          이 사진은 너를 대표하는 사진이 될거야!
+        </p>
+      </div>
+
+      <div
+          style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60%;">
+        <img class="profile-image" id="preview" onclick="fileInput()"/>
+        <label for="chooseFile" style="cursor: pointer;">
+          <div id="image-input-box" class="text-center">
+            <img src="/image/galary__bold.png" style="text-align: center; width: fit-content;">
+          </div>
+        </label>
+      </div>
+      <input type="file" id="chooseFile" name="profile" accept="image/*" onchange="readURL(this)">
+
+      <div th:if="${exception != null}">
+        <p th:text="${exception}"
+           class="filed-error-text text-center text-small text-muted"></p>
+      </div>
+      <div class="col-md-10 bottom_button">
+        <button type="submit" class="btn long_button">팀원 되기</button>
+      </div>
+    </form>
   </main>
 </div>
 
-<div class="col-md-10 bottom_button">
-  <button type="submit" class="btn long_button">팀원 되기</button>
-</div>
 
-  <th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
-    <script></script>
-  </th:block>
+<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
+  <script src="/js/image-upload.js"></script>
+</th:block>
 </body>
 
 </html>
