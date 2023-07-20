@@ -4,6 +4,7 @@ import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.util.code.RandomCodeUtils;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,14 +54,15 @@ public class Team extends BaseTimeEntity {
     @JoinColumn(name = "memberId")
     private Member teamLeader;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)
     private final List<Member> members = new ArrayList<>();
 
     @Builder
-    public Team(int memberCount, boolean drinkingOption, String introduction) {
+    public Team(int memberCount, boolean drinkingOption, String introduction, Member teamLeader) {
         this.memberCount = memberCount;
         this.drinkingOption = drinkingOption;
         this.introduction = introduction;
+        setTeamInformation(teamLeader);
     }
 
     public void setTeamInformation(final Member teamLeader) {
