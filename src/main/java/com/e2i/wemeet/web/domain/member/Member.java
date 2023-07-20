@@ -1,8 +1,9 @@
 package com.e2i.wemeet.web.domain.member;
 
-import com.e2i.wemeet.web.domain.BaseTimeEntity;
+import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.base.CryptoConverter;
 import com.e2i.wemeet.web.domain.team.Team;
+import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
@@ -91,10 +92,13 @@ public class Member extends BaseTimeEntity {
 
     public void initTeamFromTeamLeader(final Team team) {
         setTeam(team);
-        team.setTeamInformation(this);
     }
 
     public void setTeam(final Team team) {
+        if (team.getMemberCount() <= team.getMembers().size()) {
+            throw new TeamMemberCountFullException();
+        }
+
         this.team = team;
         if (!team.getMembers().contains(this)) {
             team.getMembers().add(this);

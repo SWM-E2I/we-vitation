@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.sns.SnsClient;
 
@@ -35,6 +36,16 @@ public class AwsBeanConfig {
                     awsSnsConfig.getAccessKey(),
                     awsSnsConfig.getSecretKey())
             ).region(Region.of(awsSnsConfig.getRegion()))
+            .build();
+    }
+
+    @Bean
+    public S3Client s3Client() {
+        return S3Client.builder()
+            .credentialsProvider(
+                getAwsCredentials(awsS3Config.getAccessKey(),
+                    awsS3Config.getSecretKey())
+            ).region(Region.of(awsS3Config.getRegion()))
             .build();
     }
 
