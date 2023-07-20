@@ -36,7 +36,7 @@ logging:
     org:
       apache:
         coyote:
-          http11: info
+          http11: debug
 
 ---
 spring:
