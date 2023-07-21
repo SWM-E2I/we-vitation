@@ -20,9 +20,9 @@
 
       <div>
         <p class="my-5 text-muted text-center text-small">
-          안녕하세요! 대학생 단체 미팅 서비스 위밋입니다. <br>
-          다음 절차를 진행하여 <span th:text="${leaderName}"></span> 님의 <br>
-          팀원이 되어주세요 😀
+          안녕! 내 이름은 위밋이라고 해 :) <br>
+          <span th:text="${leaderName}"></span>의 팀원이 되어주려 온거지? <br>
+          내가 도와줄게! 😀
         </p>
       </div>
 
@@ -30,8 +30,9 @@
   </div>
 
   <div class="col-md-10 main_bottom_button">
-    <a th:href="@{/v1/web/phone}" type="button" class="btn mb-1 long_button">팀원으로
-      등록하기</a>
+    <a th:href="@{/v1/web/phone}" type="button" class="btn mb-1 long_button">
+      팀원 등록하기
+    </a>
   </div>
 
   <div class="col-md-10 main_bottom_button" style="bottom: 2rem;">

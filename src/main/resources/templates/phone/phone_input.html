@@ -29,7 +29,7 @@
             - 를 빼고 입력해줘!
           <span class="visually-hidden">unread messages</span>
         </span>
-        <input th:field="*{phone}" class="form-control" placeholder="휴대폰 번호를 입력해주세요"
+        <input th:field="*{phone}" class="form-control" placeholder="휴대폰 번호를 입력해줘"
                type="tel" value="010" id="phoneNumber" th:classappend="${bindingResult.getFieldError('phone') != null} ? 'filed-error-box' : ''"
                required>
         <label for="phoneNumber" class="text-small text-muted">휴대폰 번호</label>

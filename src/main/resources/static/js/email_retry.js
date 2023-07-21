@@ -18,9 +18,9 @@ let email_retry = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function () {
-                alert('인증번호가 재전송되었습니다.');
+                alert('인증 번호를 다시 보냈어! 이메일을 확인해줘');
             }).fail(function () {
-                alert('인증 정보 재전송에 실패했습니다.');
+                alert('인증 번호를 다시 보내는데 실패했어.. 잠시 후에 다시 시도해줘!');
             })
         }
      }
