@@ -23,7 +23,7 @@
       </p>
       <div style="margin-bottom: 2rem; display: flex !important; justify-content: center;">
         <input type="radio" class="btn-check" th:field="${registerDto.gender}" id="man"
-               value="MALE" autocomplete="off" checked>
+               value="MALE" autocomplete="off">
         <label style="width: 45%; margin-right: 0.6rem;" class="btn btn-outline-info"
                for="man">남성</label>
 
@@ -117,7 +117,7 @@
 </div>
 
 <th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
-  <script></script>
+  <script src="/js/register_gender.js"></script>
 </th:block>
 </body>
 
