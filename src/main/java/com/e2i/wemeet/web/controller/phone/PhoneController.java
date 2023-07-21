@@ -106,7 +106,7 @@ public class PhoneController {
 
         // 번호 인증을 받은 사용자가 이미 가입되어있는 회원이라면 마지막 단계로 이동
         if (teamService.setMemberByPhoneNumberIfExist(teamCode, phoneNumber)) {
-            return "redirect:/v1/web/fin";
+            return "redirect:/v1/web/finish";
         }
 
         response.addCookie(CookieUtils.createCookie(cryptography.encrypt(phoneNumber), CookieEnv.PHONE_NUMBER));
