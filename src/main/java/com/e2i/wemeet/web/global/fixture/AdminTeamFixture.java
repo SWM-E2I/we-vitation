@@ -31,6 +31,7 @@ public enum AdminTeamFixture {
         return Team.builder()
             .memberCount(this.memberCount)
             .drinkingOption(this.drinkingOption)
-            .introduction(this.introduction);
+            .introduction(this.introduction)
+            .teamLeader(teamLeader);
     }
 }

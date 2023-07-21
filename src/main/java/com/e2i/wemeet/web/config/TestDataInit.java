@@ -34,12 +34,14 @@ public class TestDataInit {
         public void initMembersAndTeam() {
             Member kai = AdminMemberFixture.KAI.create();
             Member seyun = AdminMemberFixture.SEYUN.create();
+            Member rim = AdminMemberFixture.RIM.create();
 
-            List<Member> members = List.of(kai, seyun);
+            List<Member> members = List.of(kai, seyun, rim);
             memberRepository.saveAll(members);
 
             Team kaiTeam = AdminTeamFixture.GENERAL.create(kai);
-            teamRepository.save(kaiTeam);
+            Team rimTeam = AdminTeamFixture.GENERAL.create(rim);
+            teamRepository.saveAll(List.of(kaiTeam, rimTeam));
         }
     }
 }

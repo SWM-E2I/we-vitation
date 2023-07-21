@@ -13,7 +13,7 @@ let register_post = {
 
     if (ei === undefined || sn === undefined ||
         ft === undefined || pj === undefined) {
-      alert("MBTI를 전부 선택해주세요");
+      alert("MBTI의 각 자리를 전부 선택해줘!");
       return;
     }
 
@@ -21,7 +21,7 @@ let register_post = {
     const mbti = ei + sn + ft + pj;
 
     if (intro.length > 100) {
-      alert("자기 소개는 100자 이내로 가능합니다.");
+      alert("자기 소개는 100자 이내로 가능해");
       return;
     }
 
@@ -37,10 +37,10 @@ let register_post = {
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify(data)
     }).done(function () {
-      alert('회원 정보가 저장되었습니다.');
+      alert('너의 정보를 저장했어!');
       window.location.href = '/v1/web/email';
     }).fail(function () {
-      alert('회원 정보 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      alert('너의 정보를 저장하는 데 실패했어.. 잠시 후 다시 시도해줘!');
     })
 
   }
