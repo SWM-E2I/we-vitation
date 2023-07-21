@@ -33,7 +33,7 @@ public abstract class RandomCodeUtils {
         }
         String teamCode = teamLeader.getMemberId() + "@" + sb.toString();
 
-        log.info("GENERATED:: memberId: {}, teamCode: {}", teamLeader.getMemberId(), teamCode);
+        log.info("GENERATED:: nickname: {}, memberId: {}, teamCode: {}", teamLeader.getNickname(), teamLeader.getMemberId(), teamCode);
         return teamCode;
     }
 }
