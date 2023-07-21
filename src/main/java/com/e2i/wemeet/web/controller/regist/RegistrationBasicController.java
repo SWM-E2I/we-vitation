@@ -4,8 +4,10 @@ import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.domain.member.AdmissionYears;
 import com.e2i.wemeet.web.domain.member.CollegeTypes;
 import com.e2i.wemeet.web.domain.member.Colleges;
+import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.dto.register.RegisterBasicRequestDto;
 import com.e2i.wemeet.web.service.registration.RegistrationService;
+import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegistrationBasicController {
 
     private final RegistrationService registrationService;
+    private final TeamService teamService;
     private final Cryptography cryptography;
 
     // Univ List
@@ -58,8 +61,11 @@ public class RegistrationBasicController {
 
 
     @GetMapping
-    public String registerBasic(Model model) {
-        RegisterBasicRequestDto requestDto = RegisterBasicRequestDto.getEmptyInstance();
+    public String registerBasic(HttpServletRequest request, Model model) {
+        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
+        Gender teamGender = teamService.getTeamGender(teamCode);
+        RegisterBasicRequestDto requestDto = RegisterBasicRequestDto.getEmptyInstance(teamGender);
+
         model.addAttribute("registerDto", requestDto);
         model.addAttribute("bindingResult", new BeanPropertyBindingResult(requestDto, "registerDto"));
 

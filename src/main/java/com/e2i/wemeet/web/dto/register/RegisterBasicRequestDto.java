@@ -29,6 +29,10 @@ public record RegisterBasicRequestDto (
     String admissionYear
 ) {
     public static RegisterBasicRequestDto getEmptyInstance() {
-        return new RegisterBasicRequestDto("", Gender.MALE, "", "", "");
+        return new RegisterBasicRequestDto("", null, "", "", "");
+    }
+
+    public static RegisterBasicRequestDto getEmptyInstance(final Gender gender) {
+        return new RegisterBasicRequestDto("", gender, "", "", "");
     }
 }

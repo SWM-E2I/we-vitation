@@ -1,5 +1,6 @@
 package com.e2i.wemeet.web.service.team;
 
+import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.MemberRepository;
 import com.e2i.wemeet.web.domain.team.Team;
@@ -48,6 +49,14 @@ public class TeamService {
             .orElseThrow(MemberNotFoundException::new);
 
         member.setTeam(team);
+    }
+
+    @Transactional(readOnly = true)
+    public Gender getTeamGender(final String teamCode) {
+        Team team = teamRepository.findByTeamCode(teamCode)
+            .orElseThrow(TeamCodeNotFoundException::new);
+
+        return team.getGender();
     }
 
     private void verifyTeamMemberCount(Team team) {
