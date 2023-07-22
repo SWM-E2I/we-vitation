@@ -3,6 +3,7 @@ package com.e2i.wemeet.web.domain.member;
 import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.base.CryptoConverter;
 import com.e2i.wemeet.web.domain.team.Team;
+import com.e2i.wemeet.web.exception.badrequest.GenderNotMatchException;
 import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -98,6 +99,9 @@ public class Member extends BaseTimeEntity {
     public void setTeam(final Team team) {
         if (team.getMemberCount() <= team.getMembers().size()) {
             throw new TeamMemberCountFullException();
+        }
+        if (team.getGender() != this.gender) {
+            throw new GenderNotMatchException();
         }
 
         this.team = team;
