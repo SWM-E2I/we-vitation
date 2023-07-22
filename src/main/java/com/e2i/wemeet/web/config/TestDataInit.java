@@ -41,6 +41,8 @@ public class TestDataInit {
 
             Team kaiTeam = AdminTeamFixture.GENERAL.create(kai);
             Team rimTeam = AdminTeamFixture.GENERAL.create(rim);
+
+            seyun.setTeam(kaiTeam);
             teamRepository.saveAll(List.of(kaiTeam, rimTeam));
         }
     }
