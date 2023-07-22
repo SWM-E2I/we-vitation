@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.global.resolver;
+package com.e2i.wemeet.web.global.resolver.invitation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

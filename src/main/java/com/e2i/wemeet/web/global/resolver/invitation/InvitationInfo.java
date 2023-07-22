@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.global.resolver;
+package com.e2i.wemeet.web.global.resolver.invitation;
 
 public record InvitationInfo(String teamCode, Long memberId) {
     public static InvitationInfo of(String identifier) {

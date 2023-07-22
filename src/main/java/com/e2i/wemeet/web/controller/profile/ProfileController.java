@@ -1,8 +1,8 @@
 package com.e2i.wemeet.web.controller.profile;
 
 import com.e2i.wemeet.web.exception.CustomException;
-import com.e2i.wemeet.web.global.resolver.Invitation;
-import com.e2i.wemeet.web.global.resolver.InvitationInfo;
+import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.profile.ProfileImageService;
 import com.e2i.wemeet.web.service.team.TeamService;
 import lombok.RequiredArgsConstructor;

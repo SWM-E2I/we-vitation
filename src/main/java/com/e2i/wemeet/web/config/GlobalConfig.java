@@ -2,7 +2,7 @@ package com.e2i.wemeet.web.config;
 
 import com.e2i.wemeet.web.global.interceptor.IdentifierCheckInterceptor;
 import com.e2i.wemeet.web.global.interceptor.TeamCheckInterceptor;
-import com.e2i.wemeet.web.global.resolver.InvitationArgumentResolver;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationArgumentResolver;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

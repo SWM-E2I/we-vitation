@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.global.resolver;
+package com.e2i.wemeet.web.global.resolver.invitation;
 
 import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.util.request.CookieUtils;

@@ -1,8 +1,8 @@
 package com.e2i.wemeet.web.controller.main;
 
 import com.e2i.wemeet.web.controller.CookieEnv;
-import com.e2i.wemeet.web.global.resolver.Invitation;
-import com.e2i.wemeet.web.global.resolver.InvitationInfo;
+import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import jakarta.servlet.http.HttpServletResponse;

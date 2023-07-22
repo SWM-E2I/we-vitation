@@ -1,11 +1,12 @@
 package com.e2i.wemeet.web.controller.email;
 
+import com.e2i.wemeet.web.controller.ParamEnv;
 import com.e2i.wemeet.web.domain.member.Colleges;
 import com.e2i.wemeet.web.dto.email.EmailCredentialRequestDto;
 import com.e2i.wemeet.web.dto.email.EmailRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
-import com.e2i.wemeet.web.global.resolver.Invitation;
-import com.e2i.wemeet.web.global.resolver.InvitationInfo;
+import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.credential.ses.EmailCredentialService;
 import com.e2i.wemeet.web.service.email.CollegeEmailService;
 import com.e2i.wemeet.web.util.secure.Cryptography;
@@ -77,7 +78,7 @@ public class EmailController {
             return "email/email_input";
         }
 
-        redirectAttributes.addAttribute("email", cryptography.encrypt(email));
+        redirectAttributes.addAttribute(ParamEnv.EMAIL.getKey(), cryptography.encrypt(email));
         return "redirect:/v1/web/email/cred";
     }
 
