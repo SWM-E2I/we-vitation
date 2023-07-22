@@ -5,6 +5,8 @@ import com.e2i.wemeet.web.domain.member.Colleges;
 import com.e2i.wemeet.web.dto.email.EmailCredentialRequestDto;
 import com.e2i.wemeet.web.dto.email.EmailRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
+import com.e2i.wemeet.web.global.resolver.email.EmailInfo;
+import com.e2i.wemeet.web.global.resolver.email.EmailValue;
 import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
 import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.credential.ses.EmailCredentialService;
@@ -65,11 +67,11 @@ public class EmailController {
 
             return "email/email_input";
         }
-        final String email = getEmail(emailDto);
+        final String email = emailDto.getEmail();
 
         try {
             collegeEmailService.verifyDomain(emailDto.emailDomain(), invitationInfo.memberId());
-            emailCredentialService.issue(email);
+            emailCredentialService.issue(emailDto.getEmail());
         } catch (CustomException e) {
             model.addAttribute("emailDto", emailDto);
             bindingResult.addError(new FieldError("emailDomain", "emailDomain", e.getMessage()));
@@ -86,14 +88,12 @@ public class EmailController {
     @PostMapping("/reissue")
     public void reissue(@Valid @RequestBody EmailRequestDto requestDto, @Invitation InvitationInfo invitationInfo) {
         collegeEmailService.verifyDomain(requestDto.emailDomain(), invitationInfo.memberId());
-        emailCredentialService.issue(getEmail(requestDto));
+        emailCredentialService.issue(requestDto.getEmail());
     }
 
     @GetMapping("/cred")
-    public String emailValidate(@RequestParam String email, Model model) {
-        final String decryptedEmail = cryptography.decrypt(email);
-
-        EmailCredentialRequestDto emailCredentialDto = new EmailCredentialRequestDto(getEmailName(decryptedEmail), getEmailDomain(decryptedEmail), null);
+    public String emailValidate(@EmailValue EmailInfo email, Model model) {
+        EmailCredentialRequestDto emailCredentialDto = new EmailCredentialRequestDto(email.getEmailName(), email.getEmailDomain(), null);
         model.addAttribute("emailCredentialDto", emailCredentialDto);
         model.addAttribute("bindingResult", new BeanPropertyBindingResult(emailCredentialDto, "emailDto"));
 
@@ -109,8 +109,7 @@ public class EmailController {
 
             return "email/email_validate";
         }
-
-        final String email = getEmail(requestDto);
+        final String email = requestDto.getEmail();
 
         try {
             emailCredentialService.verify(email, requestDto.credential());
@@ -129,21 +128,5 @@ public class EmailController {
     private void setBindingError(BindingResult bindingResult, Model model) {
         log.info("binding result has errors: {}", bindingResult);
         model.addAttribute("bindingResult", bindingResult);
-    }
-
-    private String getEmail(EmailRequestDto emailDto) {
-        return emailDto.emailName() + "@" + emailDto.emailDomain();
-    }
-
-    private String getEmail(EmailCredentialRequestDto emailDto) {
-        return emailDto.emailName() + "@" + emailDto.emailDomain();
-    }
-
-    private String getEmailName(final String email) {
-        return email.split("@")[0];
-    }
-
-    private String getEmailDomain(final String email) {
-        return email.split("@")[1];
     }
 }

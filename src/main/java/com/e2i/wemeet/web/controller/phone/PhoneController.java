@@ -31,8 +31,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PhoneController {
 
     private final SmsCredentialService smsCredentialService;
-    private final TeamService teamService;
-    private final Cryptography cryptography;
 
     @GetMapping("/phone")
     public String phone(Model model) {
@@ -51,7 +49,7 @@ public class PhoneController {
 
             return "phone/phone_input";
         }
-        final String phoneNumber = addPrefixOnPhoneNumber(phoneRequestDto.phone());
+        final String phoneNumber = phoneRequestDto.getPrefixedPhoneNumber();
         smsCredentialService.issue(phoneNumber);
 
         redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneRequestDto.phone());
@@ -61,8 +59,7 @@ public class PhoneController {
     @ResponseBody
     @PostMapping("/phone/reissue")
     public String reissue(@Valid @RequestBody PhoneRequestDto phoneRequestDto) {
-        final String phoneNumber = addPrefixOnPhoneNumber(phoneRequestDto.phone());
-        smsCredentialService.issue(phoneNumber);
+        smsCredentialService.issue(phoneRequestDto.getPrefixedPhoneNumber());
 
         return "CREDENTIAL_REISSUE_SUCCESS";
     }
@@ -87,10 +84,8 @@ public class PhoneController {
             return "phone/phone_validate";
         }
 
-        final String phoneNumber = addPrefixOnPhoneNumber(phoneCredentialRequestDto.phone());
-
         try {
-            smsCredentialService.verify(phoneNumber, phoneCredentialRequestDto.credential());
+            smsCredentialService.verify(phoneCredentialRequestDto.getPrefixedPhoneNumber(), phoneCredentialRequestDto.credential());
         } catch (CustomException e) {
             model.addAttribute("credentialRequest", phoneCredentialRequestDto);
             bindingResult.addError(new FieldError("credential", "credential", e.getMessage()));
@@ -101,10 +96,6 @@ public class PhoneController {
 
         redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneCredentialRequestDto.phone());
         return "redirect:/v1/web/phone/route";
-    }
-
-    private String addPrefixOnPhoneNumber(String phone) {
-        return phone.replaceFirst("0", "+82");
     }
 
     private void setBindingError(BindingResult bindingResult, Model model) {

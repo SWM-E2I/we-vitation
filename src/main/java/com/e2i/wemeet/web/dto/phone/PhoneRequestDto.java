@@ -7,4 +7,7 @@ public record PhoneRequestDto (
     String phone
 
 ) {
+    public String getPrefixedPhoneNumber() {
+        return this.phone.replaceFirst("0", "+82");
+    }
 }
