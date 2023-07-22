@@ -22,6 +22,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -103,6 +104,10 @@ public class Member extends BaseTimeEntity {
         if (!team.getMembers().contains(this)) {
             team.getMembers().add(this);
         }
+    }
+
+    public boolean isEmailAuthenticated() {
+        return StringUtils.hasText(this.collegeInfo.getMail());
     }
 }
 
