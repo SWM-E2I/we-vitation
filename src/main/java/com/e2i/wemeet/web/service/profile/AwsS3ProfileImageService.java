@@ -69,17 +69,6 @@ public class AwsS3ProfileImageService implements ProfileImageService {
             .build());
     }
 
-    @Override
-    @Transactional
-    public void deleteProfileImage(Long memberId, Long profileImageId) {
-        ProfileImage profileImage = profileImageRepository.findByMemberIdAndProfileImageId(memberId, profileImageId)
-            .orElseThrow(ProfileImageNotFoundException::new);
-
-        deleteObject(profileImage.getBasicUrl());
-        profileImageRepository.deleteById(profileImageId);
-    }
-
-
     private void putObject(MultipartFile multipartFile, String objectKey) {
         File file = convertMultipartFileToFile(multipartFile);
 
