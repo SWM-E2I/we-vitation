@@ -57,9 +57,10 @@ public class EmailController {
     }
 
     @PostMapping
-    public String issue(@Valid @ModelAttribute EmailRequestDto emailDto, BindingResult bindingResult,
-            Model model, @Invitation InvitationInfo invitationInfo,
-            RedirectAttributes redirectAttributes) {
+    public String issue(@Valid @ModelAttribute EmailRequestDto emailDto,
+                        BindingResult bindingResult,
+                        @Invitation InvitationInfo invitationInfo, Model model,
+                        RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("emailDto", emailDto);
             setBindingError(bindingResult, model);
@@ -85,7 +86,8 @@ public class EmailController {
 
     @ResponseBody
     @PostMapping("/reissue")
-    public void reissue(@Valid @RequestBody EmailRequestDto requestDto, @Invitation InvitationInfo invitationInfo) {
+    public void reissue(@Valid @RequestBody EmailRequestDto requestDto,
+                        @Invitation InvitationInfo invitationInfo) {
         collegeEmailService.verifyDomain(requestDto.emailDomain(), invitationInfo.memberId());
         emailCredentialService.issue(requestDto.getEmail());
     }
@@ -101,7 +103,7 @@ public class EmailController {
 
     @PostMapping("/cred")
     public String credentialValidate(@Valid @ModelAttribute EmailCredentialRequestDto requestDto, BindingResult bindingResult,
-        @Invitation InvitationInfo invitationInfo, Model model) {
+                                     @Invitation InvitationInfo invitationInfo, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("emailCredentialDto", requestDto);
             setBindingError(bindingResult, model);

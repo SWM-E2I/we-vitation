@@ -32,8 +32,8 @@ public class RegistrationAdditionalController {
     @ResponseBody
     @PostMapping("/additional")
     public Long register(@RequestBody RegisterAdditionalRequestDto requestDto,
-        @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
-        @TeamCodeValue TeamCodeInfo teamCodeInfo, HttpServletResponse response) throws IOException {
+                         @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
+                         @TeamCodeValue TeamCodeInfo teamCodeInfo, HttpServletResponse response) throws IOException {
 
         String memberDetailKey = SerializeUtils.getMemberDetailKey(teamCodeInfo.teamCode(), phoneNumberInfo.phoneNumber());
         Long memberId = registrationService.saveRegistration(requestDto, memberDetailKey);

@@ -30,7 +30,7 @@ public class ProfileController {
 
     @PostMapping
     public String profileUpload(@RequestParam(name = "profile") MultipartFile multipartFile,
-            @Invitation InvitationInfo invitationInfo, Model model) {
+                                @Invitation InvitationInfo invitationInfo, Model model) {
         try {
             profileService.postProfileImage(invitationInfo.memberId(), multipartFile, true);
             teamService.registerTeam(invitationInfo.memberId(), invitationInfo.teamCode());

@@ -42,8 +42,9 @@ public class PhoneController {
     }
 
     @PostMapping("/phone")
-    public String issue(@Valid @ModelAttribute PhoneRequestDto phoneRequestDto, BindingResult bindingResult,
-        Model model, RedirectAttributes redirectAttributes) {
+    public String issue(@Valid @ModelAttribute PhoneRequestDto phoneRequestDto,
+                        BindingResult bindingResult,
+                        Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("phoneRequest", phoneRequestDto);
             setBindingError(bindingResult, model);
@@ -59,10 +60,8 @@ public class PhoneController {
 
     @ResponseBody
     @PostMapping("/phone/reissue")
-    public String reissue(@Valid @RequestBody PhoneRequestDto phoneRequestDto) {
+    public void reissue(@Valid @RequestBody PhoneRequestDto phoneRequestDto) {
         smsCredentialService.issue(phoneRequestDto.getPrefixedPhoneNumber());
-
-        return "CREDENTIAL_REISSUE_SUCCESS";
     }
 
     @GetMapping("/phone/cred")
@@ -76,8 +75,8 @@ public class PhoneController {
 
     @PostMapping("/phone/cred")
     public String verify(@Valid @ModelAttribute PhoneCredentialRequestDto phoneCredentialRequestDto,
-        BindingResult bindingResult, Model model,
-        RedirectAttributes redirectAttributes) {
+                         BindingResult bindingResult, Model model,
+                         RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("credentialRequest", phoneCredentialRequestDto);
             setBindingError(bindingResult, model);
@@ -95,7 +94,7 @@ public class PhoneController {
             return "phone/phone_validate";
         }
 
-        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneCredentialRequestDto.phone());
+        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), cryptography.encrypt(phoneCredentialRequestDto.phone()));
         return "redirect:/v1/web/phone/route";
     }
 
