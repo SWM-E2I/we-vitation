@@ -3,10 +3,8 @@ package com.e2i.wemeet.web.service.team;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.MemberRepository;
-import com.e2i.wemeet.web.domain.profileimage.ProfileImageRepository;
 import com.e2i.wemeet.web.domain.team.Team;
 import com.e2i.wemeet.web.domain.team.TeamRepository;
-import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
 import com.e2i.wemeet.web.exception.notfound.MemberNotFoundException;
 import com.e2i.wemeet.web.exception.notfound.TeamCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,17 +27,13 @@ public class TeamService {
             .getNickname();
     }
 
-    public boolean setMemberByPhoneNumberIfExist(final String teamCode, final String phoneNumber) {
-        Member member = memberRepository.findByPhoneNumber(phoneNumber).orElse(null);
-        if (member == null) {
-            return false;
-        }
-
+    public void addMemberInTeam(final String teamCode, final String phoneNumber) {
+        Member member = memberRepository.findByPhoneNumber(phoneNumber)
+            .orElseThrow(MemberNotFoundException::new);
         Team team = teamRepository.findByTeamCode(teamCode)
             .orElseThrow(TeamCodeNotFoundException::new);
 
         member.setTeam(team);
-        return true;
     }
 
     public void registerTeam(final Long memberId, final String teamCode) {
