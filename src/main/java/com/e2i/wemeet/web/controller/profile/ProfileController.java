@@ -1,6 +1,7 @@
 package com.e2i.wemeet.web.controller.profile;
 
 import com.e2i.wemeet.web.exception.CustomException;
+import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
 import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
 import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.profile.ProfileImageService;
@@ -35,6 +36,8 @@ public class ProfileController {
             profileService.postProfileImage(invitationInfo.memberId(), multipartFile, true);
             teamService.registerTeam(invitationInfo.memberId(), invitationInfo.teamCode());
             return "redirect:/v1/web/finish";
+        } catch (TeamMemberCountFullException e) {
+            return "redirect:/v1/web/error/full";
         } catch (CustomException e) {
             model.addAttribute("exception", e.getMessage());
             return "profile/profile";

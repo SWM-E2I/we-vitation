@@ -52,4 +52,12 @@ public class TeamService {
 
         return team.getGender();
     }
+
+    @Transactional(readOnly = true)
+    public boolean checkFullRegistered(final String teamCode) {
+        Team team = teamRepository.findByTeamCode(teamCode)
+            .orElseThrow(TeamCodeNotFoundException::new);
+
+        return team.getMembers().size() >= team.getMemberCount();
+    }
 }

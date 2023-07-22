@@ -24,8 +24,11 @@ public class MainController {
 
     @GetMapping("/main")
     public String mainPage(@RequestParam String code, HttpServletResponse response, Model model) {
-        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE));
+        if (teamService.checkFullRegistered(code)) {
+            return "redirect:/v1/web/error/full";
+        }
 
+        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE));
         String leaderName = teamService.getTeamLeaderName(code);
         model.addAttribute("leaderName", leaderName);
 
