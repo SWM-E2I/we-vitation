@@ -36,7 +36,7 @@ public class EmailArgumentResolver implements HandlerMethodArgumentResolver {
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         
-        return getEmailValue(request);
+        return new EmailInfo(getEmailValue(request));
     }
 
     private String getEmailValue(final HttpServletRequest request) {

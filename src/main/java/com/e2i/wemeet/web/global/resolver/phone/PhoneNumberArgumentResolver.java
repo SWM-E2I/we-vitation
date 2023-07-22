@@ -36,7 +36,7 @@ public class PhoneNumberArgumentResolver implements HandlerMethodArgumentResolve
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        return getPhoneNumberValue(request);
+        return new PhoneNumberInfo(getPhoneNumberValue(request));
     }
 
     private String getPhoneNumberValue(final HttpServletRequest request) {

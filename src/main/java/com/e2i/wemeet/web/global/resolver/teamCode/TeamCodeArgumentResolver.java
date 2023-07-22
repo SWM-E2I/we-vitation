@@ -35,10 +35,10 @@ public class TeamCodeArgumentResolver implements HandlerMethodArgumentResolver {
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         
-        return getEmailValue(request);
+        return new TeamCodeInfo(getTeamCode(request));
     }
 
-    private String getEmailValue(final HttpServletRequest request) {
+    private String getTeamCode(final HttpServletRequest request) {
         String cookieValue = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
         return cryptography.decrypt(cookieValue);
     }
