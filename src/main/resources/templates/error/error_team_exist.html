@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
+  <title>We:meet 안내 페이지</title>
+  <link>
+</head>
+
+<body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
+<div class="container">
+  <main class="form-regist" >
+
+    <div class="text-center" style="padding-top: 8.3rem; padding-bottom: 2rem;">
+      <h3 style="font-family: 'GangwonState', sans-serif"><strong>팀이 이미 있어!</strong></h3>
+    </div>
+
+    <div class="text-center" style="margin-bottom: 3rem;">
+      <img src="/image/error_icon.png" style="width:fit-content;">
+    </div>
+
+    <div>
+      <p class="my-5 text-muted text-center text-small">
+        어랏.. 너는 이미 <strong th:text="${leaderName}">팀장 이름</strong> <br>
+        팀에 소속되어있네? 🧐 <br>
+        위밋은 한 팀에만 속할 수 있어 <br>
+        <br>
+        <br>
+        기존에 소속된 팀을 탈퇴하고 싶다면 <br>
+        우리 어플을 설치해줘..! 🫣<br>
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<div class="col-md-10" style="position: absolute; bottom: 6rem; left: 50%; transform: translate(-50%);">
+  <div class="position-relative">
+      <span class="position-absolute top-0 translate-middle badge rounded-pill "
+            style="left: 82% !important; background-color: #2d2e78;">
+        EVENT⚡️ 진행중!
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    <a th:if="${surveyCheck.user.id == session.userPk}" th:href="@{/}" type="button" class="btn mb-1"
+       style="width: 80vw; background-color: #FF9CA2; color: #f9f3f3; padding: 0.7rem 0 0.7rem 0">앱 설치하러 가기</a>
+  </div>
+</div>
+
+<div class="col-md-10" style="position: absolute; bottom: 2rem; left: 50%; transform: translate(-50%);">
+  <p class="mb-1 text-muted text-center text-small"> &copy; We:meet</p>
+</div>
+</body>
+</html>
