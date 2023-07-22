@@ -1,10 +1,11 @@
 package com.e2i.wemeet.web.controller.main;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
 import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
+import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
     private final TeamService teamService;
+    private final Cryptography cryptography;
 
     @GetMapping("/main")
     public String mainPage(@RequestParam String code, HttpServletResponse response, Model model) {
-        response.addCookie(CookieUtils.createCookie(code, CookieEnv.TEAM_CODE));
+        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE));
 
         String leaderName = teamService.getTeamLeaderName(code);
         model.addAttribute("leaderName", leaderName);

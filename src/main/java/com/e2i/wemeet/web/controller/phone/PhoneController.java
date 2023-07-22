@@ -1,11 +1,12 @@
 package com.e2i.wemeet.web.controller.phone;
 
-import com.e2i.wemeet.web.controller.ParamEnv;
 import com.e2i.wemeet.web.dto.phone.PhoneCredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
+import com.e2i.wemeet.web.global.env.ParamEnv;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberInfo;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberValue;
 import com.e2i.wemeet.web.service.credential.sms.SmsCredentialService;
-import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PhoneController {
 
     private final SmsCredentialService smsCredentialService;
+    private final Cryptography cryptography;
 
     @GetMapping("/phone")
     public String phone(Model model) {
@@ -52,7 +53,7 @@ public class PhoneController {
         final String phoneNumber = phoneRequestDto.getPrefixedPhoneNumber();
         smsCredentialService.issue(phoneNumber);
 
-        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneRequestDto.phone());
+        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), cryptography.encrypt(phoneRequestDto.phone()));
         return "redirect:/v1/web/phone/cred";
     }
 
@@ -65,8 +66,8 @@ public class PhoneController {
     }
 
     @GetMapping("/phone/cred")
-    public String credential(@RequestParam String phone, Model model) {
-        PhoneCredentialRequestDto phoneCredentialRequestDto = new PhoneCredentialRequestDto(phone, null);
+    public String credential(@PhoneNumberValue PhoneNumberInfo phoneNumber, Model model) {
+        PhoneCredentialRequestDto phoneCredentialRequestDto = new PhoneCredentialRequestDto(phoneNumber.phoneNumber(), null);
         model.addAttribute("credentialRequest", phoneCredentialRequestDto);
         model.addAttribute("bindingResult", new BeanPropertyBindingResult(phoneCredentialRequestDto, "phoneRequest"));
 

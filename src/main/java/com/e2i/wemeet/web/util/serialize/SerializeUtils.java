@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.util.Base64;
 
 public abstract class SerializeUtils {
+
+    private static final String KEY_DELIMITER = "-";
+
     private SerializeUtils() {
     }
 
@@ -38,5 +41,9 @@ public abstract class SerializeUtils {
                 return type.cast(objectMember);
             }
         }
+    }
+
+    public static String getMemberDetailKey(final String teamCode, final String phoneNumber) {
+        return teamCode + KEY_DELIMITER + phoneNumber;
     }
 }
