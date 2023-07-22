@@ -1,7 +1,7 @@
 package com.e2i.wemeet.web.util.request;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.exception.badrequest.CookieNotFoundException;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;

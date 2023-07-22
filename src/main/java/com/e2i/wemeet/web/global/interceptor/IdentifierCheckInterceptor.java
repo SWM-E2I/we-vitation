@@ -1,7 +1,7 @@
 package com.e2i.wemeet.web.global.interceptor;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.exception.badrequest.CookieNotFoundException;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.e2i.wemeet.web.controller;
+package com.e2i.wemeet.web.global.env;
 
 import lombok.Getter;
 

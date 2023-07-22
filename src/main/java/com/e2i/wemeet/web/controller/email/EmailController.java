@@ -1,10 +1,10 @@
 package com.e2i.wemeet.web.controller.email;
 
-import com.e2i.wemeet.web.controller.ParamEnv;
 import com.e2i.wemeet.web.domain.member.Colleges;
 import com.e2i.wemeet.web.dto.email.EmailCredentialRequestDto;
 import com.e2i.wemeet.web.dto.email.EmailRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
+import com.e2i.wemeet.web.global.env.ParamEnv;
 import com.e2i.wemeet.web.global.resolver.email.EmailInfo;
 import com.e2i.wemeet.web.global.resolver.email.EmailValue;
 import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
