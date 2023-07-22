@@ -37,20 +37,22 @@ public class RegisterPostAspect {
     }
 
     private void handleCookies(HttpServletRequest request, HttpServletResponse response, Long memberId) {
-        Cookie teamCodeCookie = CookieUtils.getCookie(request.getCookies(), CookieEnv.TEAM_CODE);
+        invalidatePhoneCookie(response);
+
+        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
+        String identifier = cryptography.encrypt(CookieUtils.getIdentifier(teamCode, memberId));
+
+        Cookie identifierCookie = CookieUtils.createCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
+        response.addCookie(identifierCookie);
+        log.info("Identifier Cookie added: teamCode {} / memberId {}", teamCode, memberId);
+    }
+
+    private static void invalidatePhoneCookie(HttpServletResponse response) {
         Cookie phoneCookie = new Cookie(CookieEnv.PHONE_NUMBER.getKey(), null);
         phoneCookie.setMaxAge(0);
         phoneCookie.setValue(null);
         phoneCookie.setPath("/");
-
-        String teamCode = teamCodeCookie.getValue();
-        String identifier = cryptography.encrypt(teamCode + "-" + memberId);
-        Cookie identifierCookie = CookieUtils.createCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
-
         response.addCookie(phoneCookie);
-        response.addCookie(identifierCookie);
-
-        log.info("Identifier Cookie added: team {} / memberId {}", teamCode, memberId);
     }
 
 }

@@ -40,4 +40,13 @@ public abstract class CookieUtils {
         cookie.setHttpOnly(true);
         return cookie;
     }
+
+    public static String getIdentifier(final Cookie[] cookies, final Long memberId) {
+        String teamCode = getCookieValue(cookies, CookieEnv.TEAM_CODE);
+        return getIdentifier(teamCode, memberId);
+    }
+
+    public static String getIdentifier(final String teamCode, final Long memberId) {
+        return teamCode + CookieEnv.PERSONAL_IDENTIFIER.getDelimiter() + memberId;
+    }
 }
