@@ -94,7 +94,10 @@ public class PhoneController {
             return "phone/phone_validate";
         }
 
-        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), cryptography.encrypt(phoneCredentialRequestDto.phone()));
+        redirectAttributes.addAttribute(
+            ParamEnv.PHONE.getKey(),
+            cryptography.encrypt(phoneCredentialRequestDto.getPrefixedPhoneNumber()));
+
         return "redirect:/v1/web/phone/route";
     }
 
