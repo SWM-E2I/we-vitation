@@ -73,9 +73,9 @@ public class RegistrationBasicController {
 
     @PostMapping
     public String registerBasicPost(@Valid @ModelAttribute RegisterBasicRequestDto registerBasicRequestDto,
+                                    BindingResult bindingResult,
                                     @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
-                                    @TeamCodeValue TeamCodeInfo teamCodeInfo,
-                                    BindingResult bindingResult, Model model) {
+                                    @TeamCodeValue TeamCodeInfo teamCodeInfo, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("registerDto", registerBasicRequestDto);
             setBindingError(bindingResult, model);

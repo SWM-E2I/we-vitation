@@ -44,6 +44,7 @@ public class AwsSnsCredentialService implements SmsCredentialService {
         }
 
         redisTemplate.delete(target);
+        log.info("Credential verified. Phone: {}", target);
     }
 
     @Override

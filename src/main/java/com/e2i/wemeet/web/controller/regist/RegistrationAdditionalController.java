@@ -8,6 +8,7 @@ import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeValue;
 import com.e2i.wemeet.web.service.registration.RegistrationService;
 import com.e2i.wemeet.web.util.serialize.SerializeUtils;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class RegistrationAdditionalController {
 
     @ResponseBody
     @PostMapping("/additional")
-    public Long register(@RequestBody RegisterAdditionalRequestDto requestDto,
+    public Long register(@Valid @RequestBody RegisterAdditionalRequestDto requestDto,
                          @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
                          @TeamCodeValue TeamCodeInfo teamCodeInfo, HttpServletResponse response) throws IOException {
 
