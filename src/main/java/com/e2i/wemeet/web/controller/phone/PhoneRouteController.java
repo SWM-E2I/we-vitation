@@ -34,6 +34,11 @@ public class PhoneRouteController {
         RegistrationStep registrationStep = phoneRouteService.getRegistrationStep(phoneNumber.phoneNumber());
 
         switch (registrationStep) {
+            case EXIST -> {
+                String membersTeamLeader = phoneRouteService.getMembersTeamLeaderName(
+                    phoneNumber.phoneNumber());
+                return "redirect:/v1/web/error/exist?leaderName=" + membersTeamLeader;
+            }
             case BASIC_INFO -> {
                 addPhoneCookie(phoneNumber.phoneNumber(), response);
                 return "redirect:/v1/web/register";

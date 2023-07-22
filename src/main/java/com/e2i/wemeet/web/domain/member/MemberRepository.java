@@ -11,4 +11,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.team = :team")
     int countByTeam(@Param("team") Team team);
+
+    @Query("SELECT l.nickname FROM Member m JOIN m.team t JOIN t.teamLeader l WHERE m.phoneNumber = :phoneNumber")
+    String findTeamLeaderNameByTeam(String phoneNumber);
 }

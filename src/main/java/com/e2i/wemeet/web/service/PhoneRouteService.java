@@ -23,6 +23,9 @@ public class PhoneRouteService {
         if (member == null) {
             return RegistrationStep.BASIC_INFO;
         }
+        if (member.getTeam() != null) {
+            return RegistrationStep.EXIST;
+        }
         if (!member.isEmailAuthenticated()) {
             return RegistrationStep.EMAIL_AUTHENTICATION;
         }
@@ -39,4 +42,8 @@ public class PhoneRouteService {
             .orElse(null);
     }
 
+    @Transactional(readOnly = true)
+    public String getMembersTeamLeaderName(final String phoneNumber) {
+        return memberRepository.findTeamLeaderNameByTeam(phoneNumber);
+    }
 }
