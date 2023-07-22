@@ -20,7 +20,7 @@
 
     <div>
       <p class="my-5 text-muted text-center text-small">
-        어랏.. 너는 이미 <strong th:text="${leaderName}">팀장 이름</strong> <br>
+        어랏.. 너는 이미 <strong style="color: #2d2e78" th:text="${leaderName}">팀장 이름</strong> <br>
         팀에 소속되어있네? 🧐 <br>
         위밋은 한 팀에만 속할 수 있어 <br>
         <br>
@@ -40,7 +40,7 @@
         EVENT⚡️ 진행중!
         <span class="visually-hidden">unread messages</span>
       </span>
-    <a th:if="${surveyCheck.user.id == session.userPk}" th:href="@{/}" type="button" class="btn mb-1"
+    <a type="button" class="btn mb-1"
        style="width: 80vw; background-color: #FF9CA2; color: #f9f3f3; padding: 0.7rem 0 0.7rem 0">앱 설치하러 가기</a>
   </div>
 </div>
