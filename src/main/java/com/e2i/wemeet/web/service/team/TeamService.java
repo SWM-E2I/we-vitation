@@ -3,6 +3,7 @@ package com.e2i.wemeet.web.service.team;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.MemberRepository;
+import com.e2i.wemeet.web.domain.profileimage.ProfileImageRepository;
 import com.e2i.wemeet.web.domain.team.Team;
 import com.e2i.wemeet.web.domain.team.TeamRepository;
 import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
@@ -37,7 +38,6 @@ public class TeamService {
         Team team = teamRepository.findByTeamCode(teamCode)
             .orElseThrow(TeamCodeNotFoundException::new);
 
-        verifyTeamMemberCount(team);
         member.setTeam(team);
         return true;
     }
@@ -58,12 +58,4 @@ public class TeamService {
 
         return team.getGender();
     }
-
-    private void verifyTeamMemberCount(Team team) {
-        int teamMemberCount = memberRepository.countByTeam(team);
-        if (team.getMemberCount() <= teamMemberCount) {
-            throw new TeamMemberCountFullException();
-        }
-    }
-
 }
