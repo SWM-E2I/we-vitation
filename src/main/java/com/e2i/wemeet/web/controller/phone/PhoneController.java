@@ -1,15 +1,12 @@
 package com.e2i.wemeet.web.controller.phone;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
+import com.e2i.wemeet.web.controller.ParamEnv;
 import com.e2i.wemeet.web.dto.phone.PhoneCredentialRequestDto;
 import com.e2i.wemeet.web.dto.phone.PhoneRequestDto;
 import com.e2i.wemeet.web.exception.CustomException;
 import com.e2i.wemeet.web.service.credential.sms.SmsCredentialService;
 import com.e2i.wemeet.web.service.team.TeamService;
-import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +54,7 @@ public class PhoneController {
         final String phoneNumber = addPrefixOnPhoneNumber(phoneRequestDto.phone());
         smsCredentialService.issue(phoneNumber);
 
-        redirectAttributes.addAttribute("phone", phoneRequestDto.phone());
+        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneRequestDto.phone());
         return "redirect:/v1/web/phone/cred";
     }
 
@@ -82,7 +79,7 @@ public class PhoneController {
     @PostMapping("/phone/cred")
     public String verify(@Valid @ModelAttribute PhoneCredentialRequestDto phoneCredentialRequestDto,
         BindingResult bindingResult, Model model,
-        HttpServletRequest request, HttpServletResponse response) {
+        RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("credentialRequest", phoneCredentialRequestDto);
             setBindingError(bindingResult, model);
@@ -102,15 +99,8 @@ public class PhoneController {
             return "phone/phone_validate";
         }
 
-        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
-
-        // 번호 인증을 받은 사용자가 이미 가입되어있는 회원이라면 마지막 단계로 이동
-        if (teamService.setMemberByPhoneNumberIfExist(teamCode, phoneNumber)) {
-            return "redirect:/v1/web/finish";
-        }
-
-        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(phoneNumber), CookieEnv.PHONE_NUMBER));
-        return "redirect:/v1/web/register";
+        redirectAttributes.addAttribute(ParamEnv.PHONE.getKey(), phoneCredentialRequestDto.phone());
+        return "redirect:/v1/web/phone/route";
     }
 
     private String addPrefixOnPhoneNumber(String phone) {
