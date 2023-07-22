@@ -52,7 +52,7 @@ public class PhoneRouteController {
                 return "redirect:/v1/web/profile";
             }
             case DONE -> {
-                teamService.addMemberInTeam(teamCodeInfo.teamCode(), phoneNumber.phoneNumber());
+                teamService.registerTeam(teamCodeInfo.teamCode(), phoneNumber.phoneNumber());
                 addIdentifier(teamCodeInfo.teamCode(), phoneNumber.phoneNumber(), response);
                 return "redirect:/v1/web/finish";
             }

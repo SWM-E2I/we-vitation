@@ -27,7 +27,7 @@ public class TeamService {
             .getNickname();
     }
 
-    public void addMemberInTeam(final String teamCode, final String phoneNumber) {
+    public void registerTeam(final String teamCode, final String phoneNumber) {
         Member member = memberRepository.findByPhoneNumber(phoneNumber)
             .orElseThrow(MemberNotFoundException::new);
         Team team = teamRepository.findByTeamCode(teamCode)
