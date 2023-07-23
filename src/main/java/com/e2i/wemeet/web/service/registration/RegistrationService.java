@@ -62,7 +62,7 @@ public class RegistrationService {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
         String serializedMember = SerializeUtils.serialize(memberRequestDetails);
-        operations.set(key, serializedMember, Duration.ofDays(3));
+        operations.set(key, serializedMember, Duration.ofHours(12));
     }
 
     public Member saveMember(MemberRequestDetails memberRequestDetails) {
