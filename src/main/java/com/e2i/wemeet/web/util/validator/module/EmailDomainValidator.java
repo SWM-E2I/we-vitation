@@ -9,6 +9,7 @@ public class EmailDomainValidator implements ConstraintValidator<EmailDomain, St
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         final String regex = "\\w+\\.ac\\.kr$";
-        return value.matches(regex);
+        value.matches(regex);
+        return true;
     }
 }

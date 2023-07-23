@@ -93,6 +93,7 @@ public class Member extends BaseTimeEntity {
     }
 
     public void initTeamFromTeamLeader(final Team team) {
+        this.role = Role.MANAGER;
         setTeam(team);
     }
 
