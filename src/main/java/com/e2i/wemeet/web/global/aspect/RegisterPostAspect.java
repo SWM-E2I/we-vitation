@@ -39,7 +39,7 @@ public class RegisterPostAspect {
     private void handleCookies(HttpServletRequest request, HttpServletResponse response, Long memberId) {
         invalidatePhoneCookie(response);
 
-        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
+        String teamCode = cryptography.decrypt(CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE));
         String identifier = cryptography.encrypt(CookieUtils.getIdentifier(teamCode, memberId));
 
         Cookie identifierCookie = CookieUtils.createCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
