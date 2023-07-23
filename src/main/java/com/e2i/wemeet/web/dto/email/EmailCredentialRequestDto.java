@@ -15,4 +15,8 @@ public record EmailCredentialRequestDto (
     String credential
 ) {
 
+    public String getEmail() {
+        return this.emailName + "@" + this.emailDomain;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.e2i.wemeet.web.util.serialize;
 
+import com.e2i.wemeet.web.exception.internal.DeserializeException;
+import com.e2i.wemeet.web.exception.internal.SerializeException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,10 +10,13 @@ import java.io.ObjectOutputStream;
 import java.util.Base64;
 
 public abstract class SerializeUtils {
+
+    private static final String KEY_DELIMITER = "-";
+
     private SerializeUtils() {
     }
 
-    public static <T> String serialize(T object) throws IOException {
+    public static <T> String serialize(T object) {
         byte[] serializeBytes;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
@@ -19,14 +24,15 @@ public abstract class SerializeUtils {
                 // serializedMember -> 직렬화된 member 객체
                 serializeBytes = baos.toByteArray();
             }
+        } catch (IOException e) {
+            throw new SerializeException();
         }
 
         // 바이트 배열로 생성된 직렬화 데이터를 base64로 변환
         return Base64.getEncoder().encodeToString(serializeBytes);
     }
 
-    public static <T> T deserialize(String serialized, Class<T> type)
-        throws IOException, ClassNotFoundException {
+    public static <T> T deserialize(String serialized, Class<T> type) {
         byte[] serializedBytes = Base64.getDecoder().decode(serialized);
 
         try (ByteArrayInputStream bais = new ByteArrayInputStream(serializedBytes)) {
@@ -37,6 +43,12 @@ public abstract class SerializeUtils {
                 // 지정된 타입으로 캐스팅 후 반환
                 return type.cast(objectMember);
             }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new DeserializeException();
         }
+    }
+
+    public static String getMemberDetailKey(final String teamCode, final String phoneNumber) {
+        return teamCode + KEY_DELIMITER + phoneNumber;
     }
 }

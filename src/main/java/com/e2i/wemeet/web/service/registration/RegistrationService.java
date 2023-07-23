@@ -55,31 +55,14 @@ public class RegistrationService {
         if (!StringUtils.hasText(serializedMember)) {
             return null;
         }
-
-        try {
-            return SerializeUtils.deserialize(serializedMember, MemberRequestDetails.class);
-        } catch (IOException ioException) {
-            log.info("SerializeUtils.deserialize() - Exception: {}", ioException.getMessage());
-            throw new InternalServerException("역직렬화에 실패했습니다.");
-        } catch (Exception e) {
-            log.info("InternalServerException - Exception: {}", e.getMessage());
-            throw new InternalServerException("입력 정보를 불러오는 도중 문제가 발생했습니다.");
-        }
+        return SerializeUtils.deserialize(serializedMember, MemberRequestDetails.class);
     }
 
     private void saveMemberDetail(final MemberRequestDetails memberRequestDetails, final String key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
-        try {
-            String serializedMember = SerializeUtils.serialize(memberRequestDetails);
-            operations.set(key, serializedMember, Duration.ofDays(3));
-        } catch (IOException ioException) {
-            log.info("SerializeUtils.serialize() - Exception: {}", ioException.getMessage());
-            throw new InternalServerException("직렬화에 실패했습니다.");
-        } catch (Exception e) {
-            log.info("InternalServerException - Exception: {}", e.getMessage());
-            throw new InternalServerException("입력 정보를 저장하는 도중 문제가 발생했습니다.");
-        }
+        String serializedMember = SerializeUtils.serialize(memberRequestDetails);
+        operations.set(key, serializedMember, Duration.ofHours(12));
     }
 
     public Member saveMember(MemberRequestDetails memberRequestDetails) {

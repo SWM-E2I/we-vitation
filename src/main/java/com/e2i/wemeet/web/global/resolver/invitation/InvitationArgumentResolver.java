@@ -1,6 +1,6 @@
-package com.e2i.wemeet.web.global.resolver;
+package com.e2i.wemeet.web.global.resolver.invitation;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.servlet.http.HttpServletRequest;

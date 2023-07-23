@@ -2,29 +2,29 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout/common_fragment :: head(~{::title}, ~{::link})}">
-  <title>We:meet 팀원 등록 완료</title>
+  <title>We:meet 안내 페이지</title>
   <link>
 </head>
 
 <body class="bg-light" style="background: linear-gradient(#FFFFFF, #fff3f3);">
 <div class="container">
-  <main class="form-regist">
+  <main class="form-regist" >
 
-    <div class="text-center" style="padding-top: 9rem; padding-bottom: 1rem;">
-      <h1 style="font-family: 'Dosis', sans-serif;"><strong>we:meet</strong></h1>
+    <div class="text-center" style="padding-top: 8.3rem; padding-bottom: 2rem;">
+      <h3 style="font-family: 'GangwonState', sans-serif"><strong>팀원 모집 마감</strong></h3>
     </div>
 
-    <div class="text-center" style="margin-bottom: 2rem;">
-      <img src="/image/finish_logo2.png" style="width:fit-content;">
+    <div class="text-center" style="margin-bottom: 3rem;">
+      <img src="/image/error_icon.png" style="width:fit-content;">
     </div>
 
     <div>
       <p class="my-5 text-muted text-center text-small">
-        먼 길 오느라 고생했어! <br>
-        이제부터 <span th:text="${leaderName}">팀장</span> 의 팀원으로 함께 할거야! <br>
-
-        <br> <strong>We:meet</strong> 앱을 설치해봐! <br>
-        널 위해 줄 선물도 있다구~! 😀
+        이 팀은 이미 팀원 모집이 완료되었어..😥 <br>
+        <br>
+        <br>
+        우리 어플을 설치하고 <br>
+        팀을 직접 만들어보는 건 어때..?🧐<br>
       </p>
     </div>
 
@@ -35,20 +35,16 @@
   <div class="position-relative">
       <span class="position-absolute top-0 translate-middle badge rounded-pill "
             style="left: 82% !important; background-color: #2d2e78;">
-        설치 EVENT⚡️ 진행중!
+        EVENT⚡️ 진행중!
         <span class="visually-hidden">unread messages</span>
       </span>
-    <a type="button" class="btn mb-1" style="width: 80vw; background-color: #FF9CA2; color: #f9f3f3; padding: 0.7rem 0 0.7rem 0">앱 설치하러 가기</a>
+    <a type="button" class="btn mb-1"
+       style="width: 80vw; background-color: #FF9CA2; color: #f9f3f3; padding: 0.7rem 0 0.7rem 0">앱 설치하러 가기</a>
   </div>
 </div>
 
 <div class="col-md-10" style="position: absolute; bottom: 2rem; left: 50%; transform: translate(-50%);">
   <p class="mb-1 text-muted text-center text-small"> &copy; We:meet</p>
 </div>
-
-<th:block th:replace="~{layout/common_fragment :: common_js(~{::script})}">
-  <script></script>
-</th:block>
-
 </body>
 </html>

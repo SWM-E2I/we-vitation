@@ -1,12 +1,10 @@
 package com.e2i.wemeet.web.global.interceptor;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.exception.badrequest.CookieNotFoundException;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import com.e2i.wemeet.web.util.request.CookieUtils;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -1,16 +1,17 @@
 package com.e2i.wemeet.web.controller.regist;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.domain.member.AdmissionYears;
 import com.e2i.wemeet.web.domain.member.CollegeTypes;
 import com.e2i.wemeet.web.domain.member.Colleges;
 import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.dto.register.RegisterBasicRequestDto;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberInfo;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberValue;
+import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeInfo;
+import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeValue;
 import com.e2i.wemeet.web.service.registration.RegistrationService;
 import com.e2i.wemeet.web.service.team.TeamService;
-import com.e2i.wemeet.web.util.request.CookieUtils;
-import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.HttpServletRequest;
+import com.e2i.wemeet.web.util.serialize.SerializeUtils;
 import jakarta.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,6 @@ public class RegistrationBasicController {
 
     private final RegistrationService registrationService;
     private final TeamService teamService;
-    private final Cryptography cryptography;
 
     // Univ List
     @ModelAttribute("colleges")
@@ -61,9 +61,8 @@ public class RegistrationBasicController {
 
 
     @GetMapping
-    public String registerBasic(HttpServletRequest request, Model model) {
-        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
-        Gender teamGender = teamService.getTeamGender(teamCode);
+    public String registerBasic(@TeamCodeValue TeamCodeInfo teamCodeInfo, Model model) {
+        Gender teamGender = teamService.getTeamGender(teamCodeInfo.teamCode());
         RegisterBasicRequestDto requestDto = RegisterBasicRequestDto.getEmptyInstance(teamGender);
 
         model.addAttribute("registerDto", requestDto);
@@ -74,8 +73,9 @@ public class RegistrationBasicController {
 
     @PostMapping
     public String registerBasicPost(@Valid @ModelAttribute RegisterBasicRequestDto registerBasicRequestDto,
-        BindingResult bindingResult, Model model,
-        HttpServletRequest request) {
+                                    BindingResult bindingResult,
+                                    @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
+                                    @TeamCodeValue TeamCodeInfo teamCodeInfo, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("registerDto", registerBasicRequestDto);
             setBindingError(bindingResult, model);
@@ -84,11 +84,8 @@ public class RegistrationBasicController {
         }
 
         try {
-            final String phoneNumber = cryptography.decrypt(
-                CookieUtils.getCookieValue(request.getCookies(), CookieEnv.PHONE_NUMBER)
-            );
-            final String key = getKey(request, phoneNumber);
-            registrationService.saveRegistration(registerBasicRequestDto, key, phoneNumber);
+            final String key = SerializeUtils.getMemberDetailKey(teamCodeInfo.teamCode(), phoneNumberInfo.phoneNumber());
+            registrationService.saveRegistration(registerBasicRequestDto, key, phoneNumberInfo.phoneNumber());
 
             return "redirect:/v1/web/register/additional";
         } catch (Exception e) {
@@ -98,14 +95,6 @@ public class RegistrationBasicController {
 
             return "register/register_basic";
         }
-    }
-
-    private String getKey(HttpServletRequest request, String phoneNumber) {
-        String teamCode = CookieUtils.getCookieValue(request.getCookies(),
-            CookieEnv.TEAM_CODE);
-        return teamCode
-            + "-"
-            + phoneNumber;
     }
 
     private void setBindingError(BindingResult bindingResult, Model model) {

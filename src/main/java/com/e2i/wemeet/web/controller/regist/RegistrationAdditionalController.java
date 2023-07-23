@@ -1,12 +1,14 @@
 package com.e2i.wemeet.web.controller.regist;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.dto.register.RegisterAdditionalRequestDto;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberInfo;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberValue;
+import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeInfo;
+import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeValue;
 import com.e2i.wemeet.web.service.registration.RegistrationService;
-import com.e2i.wemeet.web.util.request.CookieUtils;
-import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.HttpServletRequest;
+import com.e2i.wemeet.web.util.serialize.SerializeUtils;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RegistrationAdditionalController {
 
     private final RegistrationService registrationService;
-    private final Cryptography cryptography;
 
     @GetMapping("/additional")
     public String registerAdditional() {
@@ -31,19 +32,14 @@ public class RegistrationAdditionalController {
 
     @ResponseBody
     @PostMapping("/additional")
-    public Long register(@RequestBody RegisterAdditionalRequestDto requestDto, HttpServletRequest request, HttpServletResponse response)
-        throws IOException {
-        String memberDetailKey = getMemberDetailKey(request);
+    public Long register(@Valid @RequestBody RegisterAdditionalRequestDto requestDto,
+                         @PhoneNumberValue PhoneNumberInfo phoneNumberInfo,
+                         @TeamCodeValue TeamCodeInfo teamCodeInfo, HttpServletResponse response) throws IOException {
+
+        String memberDetailKey = SerializeUtils.getMemberDetailKey(teamCodeInfo.teamCode(), phoneNumberInfo.phoneNumber());
         Long memberId = registrationService.saveRegistration(requestDto, memberDetailKey);
 
         if (memberId == null) response.sendRedirect("/v1/web/register/basic");
         return memberId;
     }
-
-    private String getMemberDetailKey(HttpServletRequest request) {
-        String teamCode = CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE);
-        String phoneNumber = cryptography.decrypt(CookieUtils.getCookieValue(request.getCookies(), CookieEnv.PHONE_NUMBER));
-        return teamCode + "-" + phoneNumber;
-    }
-
 }

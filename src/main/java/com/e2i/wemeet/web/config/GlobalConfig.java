@@ -2,7 +2,10 @@ package com.e2i.wemeet.web.config;
 
 import com.e2i.wemeet.web.global.interceptor.IdentifierCheckInterceptor;
 import com.e2i.wemeet.web.global.interceptor.TeamCheckInterceptor;
-import com.e2i.wemeet.web.global.resolver.InvitationArgumentResolver;
+import com.e2i.wemeet.web.global.resolver.email.EmailArgumentResolver;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationArgumentResolver;
+import com.e2i.wemeet.web.global.resolver.phone.PhoneNumberArgumentResolver;
+import com.e2i.wemeet.web.global.resolver.teamCode.TeamCodeArgumentResolver;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +42,8 @@ public class GlobalConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new InvitationArgumentResolver(cryptography));
+        resolvers.add(new PhoneNumberArgumentResolver(cryptography));
+        resolvers.add(new EmailArgumentResolver(cryptography));
+        resolvers.add(new TeamCodeArgumentResolver(cryptography));
     }
 }

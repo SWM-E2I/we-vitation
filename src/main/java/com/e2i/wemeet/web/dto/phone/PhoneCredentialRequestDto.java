@@ -9,4 +9,7 @@ public record PhoneCredentialRequestDto(
     @Length(min = 6, max = 6, message = "{Length.CredentialRequestDto.credential}")
     String credential
 ) {
+    public String getPrefixedPhoneNumber() {
+        return this.phone.replaceFirst("0", "+82");
+    }
 }

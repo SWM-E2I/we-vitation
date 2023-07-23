@@ -1,7 +1,7 @@
 package com.e2i.wemeet.web.util.request;
 
-import com.e2i.wemeet.web.controller.CookieEnv;
 import com.e2i.wemeet.web.exception.badrequest.CookieNotFoundException;
+import com.e2i.wemeet.web.global.env.CookieEnv;
 import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +39,14 @@ public abstract class CookieUtils {
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
         return cookie;
+    }
+
+    public static String getIdentifier(final Cookie[] cookies, final Long memberId) {
+        String teamCode = getCookieValue(cookies, CookieEnv.TEAM_CODE);
+        return getIdentifier(teamCode, memberId);
+    }
+
+    public static String getIdentifier(final String teamCode, final Long memberId) {
+        return teamCode + CookieEnv.PERSONAL_IDENTIFIER.getDelimiter() + memberId;
     }
 }

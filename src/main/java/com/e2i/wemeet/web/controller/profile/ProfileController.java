@@ -1,8 +1,9 @@
 package com.e2i.wemeet.web.controller.profile;
 
 import com.e2i.wemeet.web.exception.CustomException;
-import com.e2i.wemeet.web.global.resolver.Invitation;
-import com.e2i.wemeet.web.global.resolver.InvitationInfo;
+import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
+import com.e2i.wemeet.web.global.resolver.invitation.Invitation;
+import com.e2i.wemeet.web.global.resolver.invitation.InvitationInfo;
 import com.e2i.wemeet.web.service.profile.ProfileImageService;
 import com.e2i.wemeet.web.service.team.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,13 @@ public class ProfileController {
 
     @PostMapping
     public String profileUpload(@RequestParam(name = "profile") MultipartFile multipartFile,
-            @Invitation InvitationInfo invitationInfo,
-            Model model) {
+                                @Invitation InvitationInfo invitationInfo, Model model) {
         try {
             profileService.postProfileImage(invitationInfo.memberId(), multipartFile, true);
             teamService.registerTeam(invitationInfo.memberId(), invitationInfo.teamCode());
             return "redirect:/v1/web/finish";
+        } catch (TeamMemberCountFullException e) {
+            return "redirect:/v1/web/error/full";
         } catch (CustomException e) {
             model.addAttribute("exception", e.getMessage());
             return "profile/profile";

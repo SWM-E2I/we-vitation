@@ -3,6 +3,7 @@ package com.e2i.wemeet.web.domain.member;
 import com.e2i.wemeet.web.domain.base.BaseTimeEntity;
 import com.e2i.wemeet.web.domain.base.CryptoConverter;
 import com.e2i.wemeet.web.domain.team.Team;
+import com.e2i.wemeet.web.exception.badrequest.GenderNotMatchException;
 import com.e2i.wemeet.web.exception.badrequest.TeamMemberCountFullException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -22,6 +23,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -91,6 +93,7 @@ public class Member extends BaseTimeEntity {
     }
 
     public void initTeamFromTeamLeader(final Team team) {
+        this.role = Role.MANAGER;
         setTeam(team);
     }
 
@@ -98,11 +101,18 @@ public class Member extends BaseTimeEntity {
         if (team.getMemberCount() <= team.getMembers().size()) {
             throw new TeamMemberCountFullException();
         }
+        if (team.getGender() != this.gender) {
+            throw new GenderNotMatchException();
+        }
 
         this.team = team;
         if (!team.getMembers().contains(this)) {
             team.getMembers().add(this);
         }
+    }
+
+    public boolean isEmailAuthenticated() {
+        return StringUtils.hasText(this.collegeInfo.getMail());
     }
 }
 

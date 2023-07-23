@@ -10,4 +10,8 @@ public record EmailRequestDto(
     @EmailDomain
     String emailDomain
 ) {
+
+    public String getEmail() {
+        return this.emailName + "@" + this.emailDomain;
+    }
 }
