@@ -7,7 +7,8 @@ import lombok.Getter;
 
 @Getter
 public enum AdminTeamFixture {
-    GENERAL(2, true, "안녕하세욥 잘 부탁드립니다!");
+    GENERAL(2, true, "안녕하세욥 잘 부탁드립니다!"),
+    MESSY(100, true, "저희랑 같이 재미있게 놀아요!!"),
     ;
 
     private final int memberCount;
