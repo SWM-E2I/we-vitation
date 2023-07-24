@@ -10,24 +10,30 @@ let register_post = {
     const sn = $("input[name=SN]:checked").val();
     const ft = $("input[name=FT]:checked").val();
     const pj = $("input[name=PJ]:checked").val();
+    const NOTHING_CHECKED = $("#dont-know").is(':checked');
 
-    if (ei === undefined || sn === undefined ||
-        ft === undefined || pj === undefined) {
+    if ((ei === undefined || sn === undefined ||
+        ft === undefined || pj === undefined)
+        && NOTHING_CHECKED === false) {
+
       alert("MBTI의 각 자리를 전부 선택해줘!");
       return;
     }
 
     const intro = $('#introduction').val();
-    const mbti = ei + sn + ft + pj;
+    let mbti = ei + sn + ft + pj;
+
+    if (NOTHING_CHECKED === true) {
+      mbti = $("#dont-know").val();
+    }
 
     if (intro.length > 100) {
-      alert("자기 소개는 100자 이내로 가능해");
+      alert("자기 소개는 100자 이내로 가능해!");
       return;
     }
 
     let data = {
       mbti: mbti,
-      hobby: $('#hobby').val(),
       introduction: intro
     };
 
