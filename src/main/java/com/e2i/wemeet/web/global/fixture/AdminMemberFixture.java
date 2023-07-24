@@ -10,6 +10,7 @@ import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Mbti;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.Preference;
+import com.e2i.wemeet.web.domain.member.RegistrationType;
 import com.e2i.wemeet.web.domain.member.Role;
 import java.util.Arrays;
 
@@ -84,6 +85,7 @@ public enum AdminMemberFixture {
             .preference(this.preference)
             .mbti(this.mbti)
             .introduction(this.introduction)
+            .registrationType(RegistrationType.WEB)
             .credit(this.credit)
             .role(this.role);
     }

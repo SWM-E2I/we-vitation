@@ -24,7 +24,6 @@ public class MemberRequestDetails implements Serializable {
     private String collegeType;
     private String admissionYear;
     private Mbti mbti;
-    private String hobby;
     private String introduction;
 
     public void setBasicInformation(final RegisterBasicRequestDto requestDto, final String phoneNumber) {
@@ -38,7 +37,6 @@ public class MemberRequestDetails implements Serializable {
 
     public void setAdditionalInformation(final RegisterAdditionalRequestDto requestDto) {
         this.mbti = requestDto.mbti();
-        this.hobby = requestDto.hobby();
         this.introduction = requestDto.introduction();
     }
 

@@ -69,6 +69,8 @@ public class Member extends BaseTimeEntity {
 
     private Boolean imageAuth;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RegistrationType registrationType;
 
     @ManyToOne(fetch = FetchType.LAZY)
