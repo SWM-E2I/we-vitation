@@ -16,4 +16,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     String findTeamLeaderNameByTeam(String phoneNumber);
 
     void deleteByPhoneNumber(String phoneNumber);
+
+    @Query("""
+                DELETE FROM Member m
+                WHERE m NOT IN
+                (SELECT m FROM Member m LEFT JOIN m.team t WHERE t.teamLeader.memberId = m.memberId)
+           """
+    )
+    void deleteAllNewMember();
 }
