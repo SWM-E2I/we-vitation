@@ -14,4 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT l.nickname FROM Member m JOIN m.team t JOIN t.teamLeader l WHERE m.phoneNumber = :phoneNumber")
     String findTeamLeaderNameByTeam(String phoneNumber);
+
+    void deleteByPhoneNumber(String phoneNumber);
 }
