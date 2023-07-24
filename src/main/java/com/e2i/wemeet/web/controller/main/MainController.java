@@ -8,6 +8,8 @@ import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,11 @@ public class MainController {
             return "redirect:/v1/web/error/full";
         }
 
-        response.addCookie(CookieUtils.createCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE));
+        ResponseCookie responseCookie = CookieUtils.createResponseCookie(cryptography.encrypt(code),
+            CookieEnv.TEAM_CODE);
+        response.addHeader("Set-Cookie", responseCookie.toString());
+
+        CookieUtils.createResponseCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE);
         String leaderName = teamService.getTeamLeaderName(code);
         model.addAttribute("leaderName", leaderName);
 

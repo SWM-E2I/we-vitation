@@ -5,6 +5,8 @@ import com.e2i.wemeet.web.global.env.CookieEnv;
 import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 
 @Slf4j
 public abstract class CookieUtils {
@@ -39,6 +41,15 @@ public abstract class CookieUtils {
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
         return cookie;
+    }
+
+    public static ResponseCookie createResponseCookie(final String value, final CookieEnv cookieEnv) {
+        return ResponseCookie.from(cookieEnv.getKey(), value)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .maxAge(cookieEnv.getExpireSeconds())
+            .build();
     }
 
     public static String getIdentifier(final Cookie[] cookies, final Long memberId) {
