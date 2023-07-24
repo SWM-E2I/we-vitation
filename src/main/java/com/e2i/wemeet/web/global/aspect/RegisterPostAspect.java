@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -42,8 +43,8 @@ public class RegisterPostAspect {
         String teamCode = cryptography.decrypt(CookieUtils.getCookieValue(request.getCookies(), CookieEnv.TEAM_CODE));
         String identifier = cryptography.encrypt(CookieUtils.getIdentifier(teamCode, memberId));
 
-        Cookie identifierCookie = CookieUtils.createCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
-        response.addCookie(identifierCookie);
+        ResponseCookie identifierCookie = CookieUtils.createResponseCookie(identifier, CookieEnv.PERSONAL_IDENTIFIER);
+        response.addHeader("Set-Cookie", identifierCookie.toString());
         log.info("Identifier Cookie added: teamCode {} / memberId {}", teamCode, memberId);
     }
 

@@ -42,8 +42,8 @@ public class RegistrationService {
 
         memberRequestDetails.setAdditionalInformation(requestDto);
 
-        log.info("RegistrationService additional save ::  memberRequestDetails: {}", memberRequestDetails);
         Member member = saveMember(memberRequestDetails);
+        log.info("RegistrationService additional save ::  memberRequestDetails: {}", memberRequestDetails);
 
         return member.getMemberId();
     }

@@ -5,6 +5,7 @@ import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Mbti;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.Preference;
+import com.e2i.wemeet.web.domain.member.RegistrationType;
 import com.e2i.wemeet.web.domain.member.Role;
 import com.e2i.wemeet.web.util.code.RandomCodeUtils;
 import java.io.Serializable;
@@ -43,7 +44,6 @@ public class MemberRequestDetails implements Serializable {
 
     public Member toEntity() {
         CollegeInfo collegeInfo = toCollegeInfo();
-        Preference emptyPreference = toEmptyPreference();
 
         return Member.builder()
             .memberCode(RandomCodeUtils.createIntegerCode4())
@@ -51,9 +51,10 @@ public class MemberRequestDetails implements Serializable {
             .gender(this.gender)
             .phoneNumber(this.phoneNumber)
             .collegeInfo(collegeInfo)
-            .preference(emptyPreference)
             .mbti(this.mbti)
             .introduction(this.introduction)
+            .imageAuth(false)
+            .registrationType(RegistrationType.WEB)
             .credit(15)
             .role(Role.USER)
             .build();
@@ -67,13 +68,4 @@ public class MemberRequestDetails implements Serializable {
             .build();
     }
 
-    private Preference toEmptyPreference() {
-         return Preference.builder()
-            .preferenceMbti("NONE")
-            .drinkingOption("NONE")
-            .isAvoidedFriends(false)
-            .sameCollegeState("NONE")
-            .endPreferenceAdmissionYear("NONE")
-            .build();
-    }
 }

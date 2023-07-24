@@ -40,9 +40,15 @@ public class Team extends BaseTimeEntity {
     @Column(nullable = false)
     private String teamCode;
 
+    @Column(nullable = false)
+    private boolean isActive;
+
     @Column(length = 6, nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+
+    @Column(length = 20, nullable = false)
+    private String region;
 
     @Column(nullable = false)
     private boolean drinkingOption;
@@ -58,10 +64,12 @@ public class Team extends BaseTimeEntity {
     private final List<Member> members = new ArrayList<>();
 
     @Builder
-    public Team(int memberCount, boolean drinkingOption, String introduction, Member teamLeader) {
+    public Team(int memberCount, boolean drinkingOption, String introduction, Member teamLeader, String region) {
         this.memberCount = memberCount;
         this.drinkingOption = drinkingOption;
         this.introduction = introduction;
+        this.region = region;
+        this.isActive = false;
         setTeamInformation(teamLeader);
     }
 
@@ -69,5 +77,15 @@ public class Team extends BaseTimeEntity {
         this.teamCode = RandomCodeUtils.createTeamCode(teamLeader);
         this.gender = teamLeader.getGender();
         this.teamLeader = teamLeader;
+    }
+
+    public void activateIfPossible() {
+        if (isAbleToActive()) {
+            this.isActive = true;
+        }
+    }
+
+    public boolean isAbleToActive() {
+        return this.getMembers().size() >= this.memberCount;
     }
 }

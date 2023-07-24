@@ -11,9 +11,9 @@ import com.e2i.wemeet.web.service.team.RegistrationStep;
 import com.e2i.wemeet.web.service.team.TeamService;
 import com.e2i.wemeet.web.util.request.CookieUtils;
 import com.e2i.wemeet.web.util.secure.Cryptography;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,20 +61,20 @@ public class PhoneRouteController {
     }
 
     private void addPhoneCookie(final String phoneNumber, HttpServletResponse response) {
-        Cookie phoneCookie = CookieUtils.createCookie(
+        ResponseCookie phoneCookie = CookieUtils.createResponseCookie(
             cryptography.encrypt(phoneNumber),
             CookieEnv.PHONE_NUMBER);
 
-        response.addCookie(phoneCookie);
+        response.addHeader("Set-Cookie", phoneCookie.toString());
     }
 
     private void addIdentifier(final String teamCode, final String phoneNumber, HttpServletResponse response) {
         Long memberId = phoneRouteService.getMemberIdByPhoneNumber(phoneNumber);
 
-        Cookie identifier = CookieUtils.createCookie(
+        ResponseCookie identifier = CookieUtils.createResponseCookie(
             cryptography.encrypt(CookieUtils.getIdentifier(teamCode, memberId)),
             CookieEnv.PERSONAL_IDENTIFIER);
 
-        response.addCookie(identifier);
+        response.addHeader("Set-Cookie", identifier.toString());
     }
 }

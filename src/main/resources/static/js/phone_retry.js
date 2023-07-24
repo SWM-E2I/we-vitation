@@ -10,7 +10,7 @@ let phone_retry = {
             phone : $('#phone').val()
         };
 
-        if (window.confirm('인증번호를 재전송하시겠습니까?')) {
+        if (window.confirm('인증 번호를 다시 보내줄까?')) {
             $.ajax({
                 type: 'POST',
                 url: '/v1/web/phone/reissue',
