@@ -20,7 +20,7 @@ public class Preference {
 
     private String drinkingOption;
 
-    private boolean isAvoidedFriends;
+    private Boolean isAvoidedFriends;
 
     @Column(length = 4)
     private String preferenceMbti;

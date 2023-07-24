@@ -43,7 +43,6 @@ public class MemberRequestDetails implements Serializable {
 
     public Member toEntity() {
         CollegeInfo collegeInfo = toCollegeInfo();
-        Preference emptyPreference = toEmptyPreference();
 
         return Member.builder()
             .memberCode(RandomCodeUtils.createIntegerCode4())
@@ -51,7 +50,6 @@ public class MemberRequestDetails implements Serializable {
             .gender(this.gender)
             .phoneNumber(this.phoneNumber)
             .collegeInfo(collegeInfo)
-            .preference(emptyPreference)
             .mbti(this.mbti)
             .introduction(this.introduction)
             .credit(15)
@@ -67,13 +65,4 @@ public class MemberRequestDetails implements Serializable {
             .build();
     }
 
-    private Preference toEmptyPreference() {
-         return Preference.builder()
-            .preferenceMbti("NONE")
-            .drinkingOption("NONE")
-            .isAvoidedFriends(false)
-            .sameCollegeState("NONE")
-            .endPreferenceAdmissionYear("NONE")
-            .build();
-    }
 }
