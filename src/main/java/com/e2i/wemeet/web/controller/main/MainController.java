@@ -34,7 +34,6 @@ public class MainController {
             CookieEnv.TEAM_CODE);
         response.addHeader("Set-Cookie", responseCookie.toString());
 
-        CookieUtils.createResponseCookie(cryptography.encrypt(code), CookieEnv.TEAM_CODE);
         String leaderName = teamService.getTeamLeaderName(code);
         model.addAttribute("leaderName", leaderName);
 

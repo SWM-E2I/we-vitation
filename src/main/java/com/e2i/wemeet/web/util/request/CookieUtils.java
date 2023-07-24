@@ -51,7 +51,7 @@ public abstract class CookieUtils {
             .maxAge(cookieEnv.getExpireSeconds())
             .build();
     }
-
+  
     public static String getIdentifier(final Cookie[] cookies, final Long memberId) {
         String teamCode = getCookieValue(cookies, CookieEnv.TEAM_CODE);
         return getIdentifier(teamCode, memberId);
