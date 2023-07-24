@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -66,6 +67,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private int credit;
 
+    private Boolean imageAuth;
+
+    private RegistrationType registrationType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teamId")
     private Team team;
@@ -76,8 +81,9 @@ public class Member extends BaseTimeEntity {
 
     @Builder
     public Member(Long memberId, String memberCode, String nickname, Gender gender,
-        String phoneNumber, CollegeInfo collegeInfo, Preference preference, Mbti mbti,
-        String introduction, int credit, Team team, Role role) {
+                  String phoneNumber, CollegeInfo collegeInfo, Preference preference, Mbti mbti,
+                  String introduction, int credit, Boolean imageAuth, RegistrationType registrationType,
+                  Team team, Role role) {
         this.memberId = memberId;
         this.memberCode = memberCode;
         this.nickname = nickname;
@@ -88,6 +94,8 @@ public class Member extends BaseTimeEntity {
         this.mbti = mbti;
         this.introduction = introduction;
         this.credit = credit;
+        this.imageAuth = imageAuth;
+        this.registrationType = registrationType;
         this.team = team;
         this.role = role;
     }
@@ -105,10 +113,18 @@ public class Member extends BaseTimeEntity {
             throw new GenderNotMatchException();
         }
 
+        setTeamField(team);
+    }
+
+    private void setTeamField(Team team) {
         this.team = team;
-        if (!team.getMembers().contains(this)) {
-            team.getMembers().add(this);
+
+        List<Member> members = team.getMembers();
+        if (!members.contains(this)) {
+            members.add(this);
         }
+
+        team.activateIfPossible();
     }
 
     public boolean isEmailAuthenticated() {
