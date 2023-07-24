@@ -5,6 +5,7 @@ import com.e2i.wemeet.web.domain.member.Gender;
 import com.e2i.wemeet.web.domain.member.Mbti;
 import com.e2i.wemeet.web.domain.member.Member;
 import com.e2i.wemeet.web.domain.member.Preference;
+import com.e2i.wemeet.web.domain.member.RegistrationType;
 import com.e2i.wemeet.web.domain.member.Role;
 import com.e2i.wemeet.web.util.code.RandomCodeUtils;
 import java.io.Serializable;
@@ -52,6 +53,8 @@ public class MemberRequestDetails implements Serializable {
             .collegeInfo(collegeInfo)
             .mbti(this.mbti)
             .introduction(this.introduction)
+            .imageAuth(false)
+            .registrationType(RegistrationType.WEB)
             .credit(15)
             .role(Role.USER)
             .build();
