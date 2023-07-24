@@ -46,8 +46,6 @@ public abstract class CookieUtils {
     public static ResponseCookie createResponseCookie(final String value, final CookieEnv cookieEnv) {
         return ResponseCookie.from(cookieEnv.getKey(), value)
             .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
             .path("/")
             .maxAge(cookieEnv.getExpireSeconds())
             .build();

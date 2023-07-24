@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class H2DatabaseRunnerConfig {
 
-    private static final String HOST_NAME = "ec2-15-165-207-188.ap-northeast-2.compute.amazonaws.com:8080";
+    private static final String HOST_NAME = "localhost:8080";
     private static final String LOG_FORMAT = """
             
         :: Loading Database With InMemory Database ::
