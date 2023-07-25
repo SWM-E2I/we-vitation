@@ -88,4 +88,8 @@ public class Team extends BaseTimeEntity {
     public boolean isAbleToActive() {
         return this.getMembers().size() >= this.memberCount;
     }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
 }

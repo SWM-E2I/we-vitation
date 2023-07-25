@@ -41,6 +41,8 @@ public class TestDataInit {
 
             Team kaiTeam = AdminTeamFixture.GENERAL.create(kai);
             Team rimTeam = AdminTeamFixture.MESSY.create(rim);
+            kaiTeam.setTeamCode("aaa111");
+            rimTeam.setTeamCode("bbb222");
 
             seyun.setTeam(kaiTeam);
             teamRepository.saveAll(List.of(kaiTeam, rimTeam));

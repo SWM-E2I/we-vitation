@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
     Optional<Member> findByPhoneNumber(String phoneNumber);
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.team = :team")
@@ -18,10 +19,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     void deleteByPhoneNumber(String phoneNumber);
 
     @Query("""
-                DELETE FROM Member m
-                WHERE m NOT IN
-                (SELECT m FROM Member m LEFT JOIN m.team t WHERE t.teamLeader.memberId = m.memberId)
-           """
+             DELETE FROM Member m
+             WHERE m.memberId NOT IN
+             (SELECT m.memberId FROM Member m LEFT JOIN m.team t ON t.teamLeader.memberId = m.memberId)
+        """
     )
     void deleteAllNewMember();
 }

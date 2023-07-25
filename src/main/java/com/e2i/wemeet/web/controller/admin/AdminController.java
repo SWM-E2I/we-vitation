@@ -20,7 +20,8 @@ public class AdminController {
     @Transactional
     @GetMapping("/delete/{phoneNumber}")
     public String deleteMember(@PathVariable String phoneNumber) {
-        memberRepository.deleteByPhoneNumber(phoneNumber.replaceFirst("0", "+82"));
+        String phone = phoneNumber.replaceFirst("0", "+82");
+        memberRepository.deleteByPhoneNumber(phone);
         return "DELETE MEMBER SUCCESS :: " + phoneNumber;
     }
 
