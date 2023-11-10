@@ -16,8 +16,9 @@
 &nbsp;
 
 # 📌 Intro
-📤 **we:vitation**은 위밋 we:meet의 **팀원 초대 기능** 📑 **A/B 테스트**를 위해 개발되었습니다.
+📤 **we:vitation**은 위밋 we:meet의 **팀원 초대 기능** 팀원 초대 기능에 대한 사용자의 피드백을 받기 위해 개발하였습니다.
 
+앱 설치 후 팀 가입, 웹 링크를 통한 팀 가입 2가지 방식에 대한 **A/B 테스트**를 진행했고 팀 결성에 소요되는 시간과 사용자 피드백을 수용하여 팀가입 절차를 웹 링크를 통한 팀가입 방식으로 변경하였습니다.
 
 본 프로젝트의 팀원 초대 기능은 다음의 4단계로 이루어집니다.
 1. 휴대폰 인증
@@ -43,17 +44,18 @@
 
 &nbsp;
 
-## 1. 휴대폰 인증
+## 휴대폰 인증
 <div align="center">
   <img width="900" alt="image" src="https://github.com/SWM-E2I/we-vitation/assets/99247279/9d2bc077-97ab-431b-ac13-3264fccd4fa0">
 </div>
 
-## 2. 이메일 인증
+## 이메일 인증
 <div align="center">
   <img width="900" alt="image" src="https://github.com/SWM-E2I/we-vitation/assets/99247279/2f7f4d20-6008-4713-bd8b-453cc8565e43">
 </div>
 
-## 4. 프로필 사진 등록
+## 프로필 사진 등록
+- 사진 등록 API의 이미지 리사이징 및 블러 처리 작업에 많은 시간이 소요었기 때문에 AWS의 메시지 큐 서비스인 SQS + Lambda 조합 사용
 <div align="center">
   <img width="900" alt="image" src="https://github.com/SWM-E2I/we-vitation/assets/99247279/f22785c7-0b09-4e6e-b707-009b05e01ec8">
 </div>
